@@ -239,3 +239,87 @@ ax1.set_xlabel('Voltage (V)')
 ax1.set_ylabel('Current Density (A/cm$^{2}$)')
 fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
 plt.show()
+#%% PLOT FILL FACOTR VS IRRANDIANCE #######################################################
+
+fig1, ax1 = plt.subplots(1, 1)
+fig1.set_size_inches(11, 9)
+# ax1.set_prop_cycle(colors)
+# ax1.axhline(0, c = 'k')
+# ax1.axvline(0, c = 'k')
+
+sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
+sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+dates = [None, None, None, None, None, None, None, None, None]
+colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
+markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
+
+for i in range(len(sample)):
+    # This grab_data function goes into the data and grabs certain parameters 
+    # you specifiy. In this case the power and efficiency.
+    # Select the dictionary you want to pull from, the  focus lens position, 
+    # the filter(s) you want, and the laser current(s) you want to pull
+    x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
+                          'Power (W)', 'FF',
+                          # pull out data only from a specific date (optional)
+                          date =  dates[i],
+                          # pull out data only with a specific wavelength (1550nm or 1310nm)
+                          LaserWL = '1550nm',
+                          # pull out data only with a specific voltage sweep direction
+                          direction = 'Forward',
+                          # x and y factor scales (in this case turn power into irradiance)
+                          xfactor=1/Atot, yfactor=1, 
+                          # the below won't do anything here
+                          m='^', col=color[3],
+                          lab='nolabel', l='')
+    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = '',
+             label = sample_labels[i])
+
+ax1.set_xscale('log')
+ax1.grid(which='both')
+ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
+ax1.set_ylabel('Fill factor')
+ax1.set_title("Fill factor as function of input power")
+fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+plt.show()
+#%% PLOT SPECTRAL RESPONSE VS IRRADIANCE####################################################
+
+fig1, ax1 = plt.subplots(1, 1)
+fig1.set_size_inches(11, 9)
+# ax1.set_prop_cycle(colors)
+# ax1.axhline(0, c = 'k')
+# ax1.axvline(0, c = 'k')
+
+sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
+sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+dates = [None, None, None, None, None, None, None, None, None]
+colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
+markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
+
+for i in range(len(sample)):
+    # This grab_data function goes into the data and grabs certain parameters 
+    # you specifiy. In this case the power and efficiency.
+    # Select the dictionary you want to pull from, the  focus lens position, 
+    # the filter(s) you want, and the laser current(s) you want to pull
+    x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
+                          'Power (W)', 'SR (A/W)',
+                          # pull out data only from a specific date (optional)
+                          date =  dates[i],
+                          # pull out data only with a specific wavelength (1550nm or 1310nm)
+                          LaserWL = '1550nm',
+                          # pull out data only with a specific voltage sweep direction
+                          direction = 'Forward',
+                          # x and y factor scales (in this case turn power into irradiance)
+                          xfactor=1/Atot, yfactor=1, 
+                          # the below won't do anything here
+                          m='^', col=color[3],
+                          lab='nolabel', l='')
+    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = '',
+             label = sample_labels[i])
+
+ax1.set_xscale('log')
+ax1.grid(which='both')
+ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
+ax1.set_ylabel('SR (A/W)')
+ax1.set_title("Spectral response as function of input power")
+fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+plt.show()
