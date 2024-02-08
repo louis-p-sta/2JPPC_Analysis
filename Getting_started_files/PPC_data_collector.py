@@ -42,7 +42,7 @@ class PPC_data_collector:
         """
         self.dictionary = {}
         self.script_type = script_type
-        
+
         for folder in folderlist:
             data_folder = path.join(data_dir, folder)
             if (script_type == 'FixedVoltage' and 

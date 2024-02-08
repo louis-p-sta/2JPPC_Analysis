@@ -81,7 +81,7 @@ power_table_orig = power_table_orig.dropna()
 # Samples you want to look at.
 # These lists of folders can be defined in the Sample_Names_and_Locations file
 # or elsewhere. This just puts them all together.
-folderlist = folder_C5245
+folderlist = folder_C5245 + folder_C5246 + folder_C5247
 
 # Put all the data into an initial dictionary. Choose what type of dictionary
 # you want (DarkIV, LightIV, FixedCurrent, FixedVoltage, LightBias) or combine
@@ -152,6 +152,8 @@ LightIV_data.add_to_dict('fit_Voc_slope', Atot = 0.054)
 Atot = 0.054 # (cm^2)
 Atot2 = 1 # (cm^2)
 
+lightDic = LightIV_data.dictionary
+
 #%% PLOT ALL Eff vs Irr #######################################################
 # Example of how you might plot efficiency vs. laser irradiance
 
@@ -161,11 +163,11 @@ fig1.set_size_inches(11, 9)
 # ax1.axhline(0, c = 'k')
 # ax1.axvline(0, c = 'k')
 
-sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1' ]
-sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1'] #For plotting
-dates = [None, None, None]
-colours = [color[0], color[1], color[2]]
-markers = ['o', 's', '*']
+sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
+sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+dates = [None, None, None, None, None, None, None, None, None]
+colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
+markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
 
 for i in range(len(sample)):
     # This grab_data function goes into the data and grabs certain parameters 
@@ -197,7 +199,7 @@ fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
 plt.show()
 
 #%% PLOT SELECT IV CURVES #######################################################
-# Example of how you might plot IV curves
+# # Example of how you might plot IV curves
 
 fig1, ax1 = plt.subplots(1, 1)
 fig1.set_size_inches(11, 9)
@@ -205,14 +207,15 @@ fig1.set_size_inches(11, 9)
 ax1.axhline(0, c = 'k')
 ax1.axvline(0, c = 'k')
 
-sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1' ]
-sample_labels = ['C5245-X7Y0 18A','C5245-X3Y1 18A', 'C5245-X6Y1 18A']
-dates = [None, None, None]
-colours = [color[0], color[1], color[2]]
-markers = ['o', 's', '*']
+sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
+sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+dates = [None, None, None, None, None, None, None, None, None]
+colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
+markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
+
 # duplicated currents have (#)'s beside them. Sometimes it is useful/clearer to
 # only select ones.
-curr = ['18.0', '18.0', '18.0',] #What is this for? How to select filter?
+curr = ['18.0', '18.0', '18.0','18.0','18.0','18.0', '18.0', '18.0', '18.0'] #What is this for? How to select filter?
 
 for i in range(len(sample)):
     x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['ND1'], [curr[i]],
@@ -224,7 +227,7 @@ for i in range(len(sample)):
                           m='^', col=color[3],
                           lab='nolabel', l='')
     ax1.plot(x[0], y[0], c = colours[i], marker = None, ls = '-',
-             label = sample_labels[i])
+              label = sample_labels[i])
 
 # ax1.set_xscale('log')
 # ax1.set_yscale('log')
