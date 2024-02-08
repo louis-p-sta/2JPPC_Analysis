@@ -234,7 +234,7 @@ for i in range(len(sample)):
 ax1.grid(which='both')
 #ax1.set_ylim(-2.0, 6.0)
 #ax1.set_xlim(-0.1, 1.2)
-ax1.set_title('18 A ND1 C5245', loc='right')
+ax1.set_title('18 A ND1 2J PPCs', loc='right')
 ax1.set_xlabel('Voltage (V)')
 ax1.set_ylabel('Current Density (A/cm$^{2}$)')
 fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
