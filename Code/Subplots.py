@@ -155,12 +155,11 @@ Atot2 = 1 # (cm^2)
 lightDic = LightIV_data.dictionary
 
 plt.close('all')
-
+#%%Initial plotting code
+fig1, ((ax1, ax2,ax3),(ax4,ax5,ax6)) = plt.subplots(2, 3)
+fig1.set_size_inches(11, 9)
 #%% PLOT ALL Eff vs Irr #######################################################
 # Example of how you might plot efficiency vs. laser irradiance
-
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
 # ax1.set_prop_cycle(colors)
 # ax1.axhline(0, c = 'k')
 # ax1.axvline(0, c = 'k')
@@ -202,12 +201,9 @@ plt.show()
 
 #%% PLOT SELECT IV CURVES #######################################################
 # # Example of how you might plot IV curves
-
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
 # ax1.set_prop_cycle(colors)
-ax1.axhline(0, c = 'k')
-ax1.axvline(0, c = 'k')
+ax2.axhline(0, c = 'k')
+ax2.axvline(0, c = 'k')
 
 sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
 sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
@@ -228,23 +224,21 @@ for i in range(len(sample)):
                           xfactor=1, yfactor=-1/Atot, 
                           m='^', col=color[3],
                           lab='nolabel', l='')
-    ax1.plot(x[0], y[0], c = colours[i], marker = None, ls = '-',
+    ax2.plot(x[0], y[0], c = colours[i], marker = None, ls = '-',
               label = sample_labels[i])
 
 # ax1.set_xscale('log')
 # ax1.set_yscale('log')
-ax1.grid(which='both')
+ax2.grid(which='both')
 #ax1.set_ylim(-2.0, 6.0)
 #ax1.set_xlim(-0.1, 1.2)
-ax1.set_title('18 A ND1 2J PPCs', loc='right')
-ax1.set_xlabel('Voltage (V)')
-ax1.set_ylabel('Current Density (A/cm$^{2}$)')
+ax2.set_title('18 A ND1 2J PPCs', loc='right')
+ax2.set_xlabel('Voltage (V)')
+ax2.set_ylabel('Current Density (A/cm$^{2}$)')
 fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
 plt.show()
 #%% PLOT FILL FACOTR VS IRRANDIANCE #######################################################
 
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
 # ax1.set_prop_cycle(colors)
 # ax1.axhline(0, c = 'k')
 # ax1.axvline(0, c = 'k')
@@ -273,20 +267,19 @@ for i in range(len(sample)):
                           # the below won't do anything here
                           m='^', col=color[3],
                           lab='nolabel', l='')
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = '',
+    ax3.plot(x, y, c = colours[i], marker = markers[i], ls = '',
              label = sample_labels[i])
 
-ax1.set_xscale('log')
-ax1.grid(which='both')
-ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
-ax1.set_ylabel('Fill factor')
-ax1.set_title("Fill factor as function of input power")
-fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+ax3.set_xscale('log')
+ax3.grid(which='both')
+ax3.set_xlabel('Irradiance (W/cm$^{2}$)')
+ax3.set_ylabel('Fill factor')
+ax3.set_title("Fill factor as function of input power")
+#fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
 plt.show()
 #%% PLOT SPECTRAL RESPONSE VS IRRADIANCE####################################################
 
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
+
 # ax1.set_prop_cycle(colors)
 # ax1.axhline(0, c = 'k')
 # ax1.axvline(0, c = 'k')
@@ -315,20 +308,19 @@ for i in range(len(sample)):
                           # the below won't do anything here
                           m='^', col=color[3],
                           lab='nolabel', l='')
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = '',
+    ax4.plot(x, y, c = colours[i], marker = markers[i], ls = '',
              label = sample_labels[i])
 
-ax1.set_xscale('log')
-ax1.grid(which='both')
-ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
-ax1.set_ylabel('SR (A/W)')
-ax1.set_title("Spectral response as function of input power")
-fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+ax4.set_xscale('log')
+ax4.grid(which='both')
+ax4.set_xlabel('Irradiance (W/cm$^{2}$)')
+ax4.set_ylabel('SR (A/W)')
+ax4.set_title("Spectral response as function of input power")
+#fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
 plt.show()
 #%% PLOT ISC-VOC##############################################################
 
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
+
 # ax1.set_prop_cycle(colors)
 # ax1.axhline(0, c = 'k')
 # ax1.axvline(0, c = 'k')
@@ -358,21 +350,20 @@ for i in range(len(sample)):
                           m='^', col=color[3],
                           lab='nolabel', l='')
     y = abs(np.array(y)) #Make sure that this is ok to do
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = '',
+    ax5.plot(x, y, c = colours[i], marker = markers[i], ls = '',
              label = sample_labels[i])
 
-ax1.set_xscale('linear')
-ax1.set_yscale('log')
-ax1.grid(which='both')
-ax1.set_xlabel('Voc (V)')
-ax1.set_ylabel('Isc (A)')
-ax1.set_title("Isc-Voc curve")
-fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+ax5.set_xscale('linear')
+ax5.set_yscale('log')
+ax5.grid(which='both')
+ax5.set_xlabel('Voc (V)')
+ax5.set_ylabel('Isc (A)')
+ax5.set_title("Isc-Voc curve")
+#fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
 plt.show()
 #%% PLOT RESISTIVITY VS IRRADIANCE#################################
 
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
+
 # ax1.set_prop_cycle(colors)
 # ax1.axhline(0, c = 'k')
 # ax1.axvline(0, c = 'k')
@@ -402,14 +393,14 @@ for i in range(len(sample)):
                           m='^', col=color[3],
                           lab='nolabel', l='')
     y = abs(np.array(y)) #Make sure that this is ok to do. Perhaps the resistance should be positive, since these curves are typically flipped.
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = '',
+    ax6.plot(x, y, c = colours[i], marker = markers[i], ls = '',
              label = sample_labels[i])
 
-ax1.set_xscale('log')
-ax1.set_yscale('log')
-ax1.grid(which='both')
-ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
-ax1.set_ylabel('Resistance ($\Omega$)')
-ax1.set_title("Series resistance at Voc vs irradiance")
-fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+ax6.set_xscale('log')
+ax6.set_yscale('log')
+ax6.grid(which='both')
+ax6.set_xlabel('Irradiance (W/cm$^{2}$)')
+ax6.set_ylabel('Resistance ($\Omega$)')
+ax6.set_title("Series resistance at Voc vs irradiance")
+#fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
 plt.show()
