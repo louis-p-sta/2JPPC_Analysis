@@ -29,18 +29,6 @@ from Sample_Names_and_Locations import *
 import PPC_data_collector as PPC
 import plot_PPC_IV_functions as plt_PPC
 
-#%% PLOT GLOBAL SETTINGS ########################################################
-sns.set_theme(context='poster', style="ticks",
-              rc={'lines.markeredgecolor': 'k', 'axes.edgecolor': 'k',
-                  'xtick.direction': 'in', 'ytick.direction': 'in',
-                  'xtick.top': True, 'ytick.right': True,
-                  'lines.markersize': 5})
-color = sns.color_palette('Set1')
-colors = (cycler(color=sns.color_palette('Set1')))
-color_grad = sns.color_palette('rocket',  n_colors = 130)
-color_grad2 = sns.color_palette('Blues_r', n_colors = 130)
-# colors = (cycler(color=sns.color_palette('rocket',  n_colors = 48)))
-
 #%% DATA LOCATIONS ##############################################################
 
 # Path to where the data is located. Same as in the import section.
@@ -156,6 +144,32 @@ lightDic = LightIV_data.dictionary
 
 plt.close('all')
 
+#%% PLOT GLOBAL SETTINGS ########################################################
+color = sns.color_palette('Set1')
+colors = (cycler(color=sns.color_palette('Set1')))
+color_grad = sns.color_palette('rocket',  n_colors = 130)
+color_grad2 = sns.color_palette('Blues_r', n_colors = 130)
+# colors = (cycler(color=sns.color_palette('rocket',  n_colors = 48)))
+#
+sample = ['C5245-X7Y0','C5245-X3Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4', 'C5195-X25Y5', 'C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6'
+sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4', 'C5195-X25Y5', 'C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+dates = [None, None, None, None, None, None, None, None, None, None, None]
+colour_C5195 = color[0]
+colour_C5245 = color[1]
+colour_C5246 = color[2]
+colour_C5247 = color[3]
+colours = [colour_C5245,colour_C5245, colour_C5246, colour_C5246, colour_C5247, colour_C5247, colour_C5247, colour_C5247, colour_C5195, colour_C5195]
+markers =['o','o','o','o','o','o','o','o','o','o','o','o','o','o','o']#['.', 'o', 'v', '^', '<', '>', '8', 's', 'p', '*', 'h', 'H', 'D', 'd', 'P', 'X'] #['None','None','None','None','None','None','None','None','None','None','None','None','None','None','None']#['.', 'o', 'v', '^', '<', '>', '8', 's', 'p', '*', 'h', 'H', 'D', 'd', 'P', 'X']
+linestyles = ['solid', 'dashed','solid','dashed', 'solid','dotted','dashed','dashdot','solid','dashed']
+linewidth = 2
+markersize = 3
+legend_fontsize = 15
+
+sns.set_theme(context='poster', style="ticks",
+              rc={'lines.markeredgecolor': 'k', 'axes.edgecolor': 'k',
+                  'xtick.direction': 'in', 'ytick.direction': 'in',
+                  'xtick.top': True, 'ytick.right': True,
+                  'lines.markersize': markersize})
 #%% PLOT ALL Eff vs Irr #######################################################
 # Example of how you might plot efficiency vs. laser irradiance
 
@@ -164,12 +178,6 @@ fig1.set_size_inches(11, 9)
 # ax1.set_prop_cycle(colors)
 # ax1.axhline(0, c = 'k')
 # ax1.axvline(0, c = 'k')
-
-sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4', 'C5195-X25Y5', 'C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6'
-sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4', 'C5195-X25Y5', 'C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
-dates = [None, None, None, None, None, None, None, None, None, None, None]
-colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8], color[0], color[1]]
-markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^', 'P', 'o']
 
 for i in range(len(sample)):
     # This grab_data function goes into the data and grabs certain parameters 
@@ -189,7 +197,7 @@ for i in range(len(sample)):
                           # the below won't do anything here
                           m='^', col=color[3],
                           lab='nolabel', l='')
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = '',
+    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw= linewidth,
              label = sample_labels[i])
 
 ax1.set_xscale('log')
@@ -228,7 +236,7 @@ for i in range(len(sample)):
                           xfactor=1, yfactor=-1/Atot, 
                           m='^', col=color[3],
                           lab='nolabel', l='')
-    ax1.plot(x[0], y[0], c = colours[i], marker = None, ls = '-',
+    ax1.plot(x[0], y[0], c = colours[i], marker = None, ls = linestyles[i], lw = linewidth,
               label = sample_labels[i])
 
 # ax1.set_xscale('log')
@@ -273,7 +281,7 @@ for i in range(len(sample)):
                           # the below won't do anything here
                           m='^', col=color[3],
                           lab='nolabel', l='')
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = '',
+    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i],lw = linewidth,
              label = sample_labels[i])
 
 ax1.set_xscale('log')
@@ -281,7 +289,7 @@ ax1.grid(which='both')
 ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
 ax1.set_ylabel('Fill factor')
 ax1.set_title("Fill factor as function of input power")
-fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+fig1.legend(framealpha=1, loc = "upper left", fontsize = legend_fontsize).set_draggable(True)
 plt.show()
 #%% PLOT SPECTRAL RESPONSE VS IRRADIANCE####################################################
 
@@ -315,7 +323,8 @@ for i in range(len(sample)):
                           # the below won't do anything here
                           m='^', col=color[3],
                           lab='nolabel', l='')
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = '',
+    y = abs(np.array(y))
+    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw = linewidth,
              label = sample_labels[i])
 
 ax1.set_xscale('log')
@@ -323,7 +332,7 @@ ax1.grid(which='both')
 ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
 ax1.set_ylabel('SR (A/W)')
 ax1.set_title("Spectral response as function of input power")
-fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+fig1.legend(framealpha=1, loc = "upper left", fontsize = legend_fontsize).set_draggable(True)
 plt.show()
 #%% PLOT ISC-VOC##############################################################
 
@@ -345,7 +354,7 @@ for i in range(len(sample)):
     # Select the dictionary you want to pull from, the  focus lens position, 
     # the filter(s) you want, and the laser current(s) you want to pull
     x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
-                          'Voc (V)', 'Isc (A)',
+                          'Isc (A)', 'Voc (V)',
                           # pull out data only from a specific date (optional)
                           date =  dates[i],
                           # pull out data only with a specific wavelength (1550nm or 1310nm)
@@ -357,16 +366,17 @@ for i in range(len(sample)):
                           # the below won't do anything here
                           m='^', col=color[3],
                           lab='nolabel', l='')
-    y = abs(np.array(y)) #Make sure that this is ok to do
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = '',
+    x = abs(np.array(x)) #Make sure that this is ok to do
+    x = x/Atot
+    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw = linewidth,
              label = sample_labels[i])
 
-ax1.set_xscale('linear')
-ax1.set_yscale('log')
+ax1.set_yscale('linear')
+ax1.set_xscale('log')
 ax1.grid(which='both')
-ax1.set_xlabel('Voc (V)')
-ax1.set_ylabel('Isc (A)')
-ax1.set_title("Isc-Voc curve")
+ax1.set_ylabel('Voc (V)')
+ax1.set_xlabel('Jsc (A/cm$^2$)')
+ax1.set_title("Voc-Jsc curve")
 fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
 plt.show()
 #%% PLOT RESISTIVITY VS IRRADIANCE#################################
@@ -402,14 +412,14 @@ for i in range(len(sample)):
                           m='^', col=color[3],
                           lab='nolabel', l='')
     y = abs(np.array(y)) #Make sure that this is ok to do. Perhaps the resistance should be positive, since these curves are typically flipped.
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = '',
+    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw = linewidth,
              label = sample_labels[i])
 
 ax1.set_xscale('log')
 ax1.set_yscale('log')
 ax1.grid(which='both')
 ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
-ax1.set_ylabel('Resistance ($\Omega$)')
+ax1.set_ylabel('Resistivity ($\Omega$*m)')
 ax1.set_title("Series resistance at Voc vs irradiance")
 fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
 plt.show()
