@@ -173,7 +173,7 @@ plt.close('all')
 
 #%% PLOT GLOBAL SETTINGS ########################################################
 color = sns.color_palette('Set1')
-colors = (cycler(color=sns.color_palette('Set1')))
+colours = (cycler(color=sns.color_palette('Set1')))
 color_grad = sns.color_palette('rocket',  n_colors = 130)
 color_grad2 = sns.color_palette('Blues_r', n_colors = 130)
 # colors = (cycler(color=sns.color_palette('rocket',  n_colors = 48)))
@@ -260,7 +260,7 @@ for i in range(len(sample)):
         n += 1
     #resp = np.divide(y2,x1)
     ax1.plot(x2, np.divide(y_prime,x2), c = colours[i+4], marker = markers[i+4], ls = linestyles[i], lw = linewidth,
-             label = "24$\degree$C")
+             label = "23$\degree$C")
     x3, y3 = plt_PPC.grab_data(FixedVoltage_data.dictionary, sample[i], ['NaN'], ['ND1 + ND2','ND2','ND1','No Filter'],['6.0 (2)','8.0 (2)','10.0 (2)','12.0 (2)','14.0 (2)','16.0 (2)','18.0 (2)', '6.5 (2)', '7.0 (2)'],
                           'Power (W)', 'Current (A)',
                           # pull out data only from a specific date (optional)
@@ -282,7 +282,7 @@ for i in range(len(sample)):
         n += 1
     #resp = np.divide(y2,x1)
     ax1.plot(x3, np.divide(y_prime,x3), c = 'orange', marker = markers[i+7], ls = linestyles[i], lw = linewidth,
-             label = "23$\degree$C")
+             label = "21$\degree$C")
     x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
                           'Power (W)', 'Isc (A)',
                           # pull out data only from a specific date (optional)
