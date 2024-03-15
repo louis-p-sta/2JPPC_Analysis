@@ -346,7 +346,7 @@ for i in range(len(sample)):
                           m='^', col=color[3],
                           lab='nolabel', l='')
     y = abs(np.array(y))
-    ax1.plot(x, y, c = 'red', marker = markers[i], ls = linestyles[i], lw = linewidth,
+    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw = linewidth,
              label = sample_labels[i])
 x1, y1 = plt_PPC.grab_data(FixedVoltage_data.dictionary, 'C5245-X7Y0', ['NaN'], ['ND1 + ND2','ND2','ND1','No Filter'],['6.0','8.0','10.0','12.0','14.0','16.0','18.0', '6.5', '7.0'],
                       'Power (W)', 'Current (A)',
@@ -418,7 +418,7 @@ ax1.plot(x3, np.divide(y_prime,np.array(x3)*Atot), c = 'orange', marker = marker
 ax1.set_xscale('log')
 ax1.grid(which='both')
 ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
-ax1.set_ylabel('SR (A/W)')
+ax1.set_ylabel('Responsivity (A/W)')
 ax1.set_title("Responsivity of 2J PPCs (All measurements were taken at 25$\degree$C other than the two specified)")
 fig1.legend(framealpha=1, loc = "upper left", fontsize = legend_fontsize).set_draggable(True)
 plt.show()
