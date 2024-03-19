@@ -74,10 +74,11 @@ def grab_data(dataset, name, positions, filters, currents, xparam, yparam,
                 #if curr[0][0] 
 
                 if script_name == 'LightIV':
+                    print("Fails at", name)
                     curr = [x for x in curr if 
-                            (dataset[name][p][f][x]['Direction'] == direction or direction == None)
-                            and (dataset[name][p][f][x]['Date'] == date or date == None)
-                            and (dataset[name][p][f][x]['Laser Wavelength'] == LaserWL)]
+                        (dataset[name][p][f][x]['Direction'] == direction or direction == None)
+                        and (dataset[name][p][f][x]['Date'] == date or date == None)
+                        and (dataset[name][p][f][x]['Laser Wavelength'] == LaserWL)]
                 elif script_name == 'LightBias':
                     curr = [x for x in curr if 
                             (dataset[name][p][f][x]['Direction'] == direction or direction == None)
@@ -87,13 +88,19 @@ def grab_data(dataset, name, positions, filters, currents, xparam, yparam,
                             # and (dataset[name][p][f][x]['Date'] == date or date == None)
                             # and (dataset[name][p][f][x]['Laser B Current (A)'] == LaserB) for x in curr])
                 else:
+                    try:
+                        curr = [x for x in curr if 
+                                (dataset[name][p][f][x]['Date'] == date or date == None)
+                                and (dataset[name][p][f][x]['Laser Wavelength'] == LaserWL)]
+                    except:
+                        print("Could not find a current...")
+                try:
                     curr = [x for x in curr if 
-                            (dataset[name][p][f][x]['Date'] == date or date == None)
-                            and (dataset[name][p][f][x]['Laser Wavelength'] == LaserWL)]
-                curr = [x for x in curr if 
-                        (dataset[name][p][f][x]['Direction'] == direction or direction == None)
-                        and (dataset[name][p][f][x]['Date'] == date or date == None)
-                        and (dataset[name][p][f][x]['Laser Wavelength'] == laser_wavl or laser_wavl == None)]
+                            (dataset[name][p][f][x]['Direction'] == direction or direction == None)
+                            and (dataset[name][p][f][x]['Date'] == date or date == None)
+                            and (dataset[name][p][f][x]['Laser Wavelength'] == laser_wavl or laser_wavl == None)]
+                except:
+                    print("Whoops")
             else:
                 if curr == ['all']:
                     try:

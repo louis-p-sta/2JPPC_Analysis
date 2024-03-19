@@ -69,7 +69,7 @@ power_table_orig = power_table_orig.dropna()
 # Samples you want to look at.
 # These lists of folders can be defined in the Sample_Names_and_Locations file
 # or elsewhere. This just puts them all together.
-folderlist = folder_C5245 + folder_C5246 + folder_C5247# + folder_C5195
+folderlist = folder_C5245 + folder_C5246 + folder_C5247 + folder_C5195
 
 # Put all the data into an initial dictionary. Choose what type of dictionary
 # you want (DarkIV, LightIV, FixedCurrent, FixedVoltage, LightBias) or combine
@@ -229,7 +229,7 @@ for i in range(len(sample)):
                           xfactor=1/Atot, yfactor=-1, 
                           # the below won't do anything here
                           m='^', col=color[3],
-                          lab='nolabel', l='')
+                          lab='nolabel', l='', script_name= "Fixed_Voltage")
     n = 0
     y_prime = [None]*len(y1)
     for y in y1:
@@ -251,7 +251,7 @@ for i in range(len(sample)):
                           xfactor=1/Atot, yfactor=-1, 
                           # the below won't do anything here
                           m='^', col=color[3],
-                          lab='nolabel', l='')
+                          lab='nolabel', l='',script_name= "Fixed_Voltage")
     n = 0
     y_prime = [None]*len(y2)
     for y in y2:
@@ -273,7 +273,7 @@ for i in range(len(sample)):
                           xfactor=1/Atot, yfactor=-1, 
                           # the below won't do anything here
                           m='^', col=color[3],
-                          lab='nolabel', l='')
+                          lab='nolabel', l='',script_name= "Fixed_Voltage")
     n = 0
     y_prime = [None]*len(y2)
     for y in y3:

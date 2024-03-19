@@ -360,7 +360,7 @@ x1, y1 = plt_PPC.grab_data(FixedVoltage_data.dictionary, 'C5245-X7Y0', ['NaN'], 
                       xfactor=1/Atot, yfactor=-1, 
                       # the below won't do anything here
                       m='^', col=color[3],
-                      lab='nolabel', l='')
+                      lab='nolabel', l='',script_name= "Fixed_Voltage")
 n = 0
 y_prime = [None]*len(y1)
 for y in y1:
@@ -382,7 +382,7 @@ x2, y2 = plt_PPC.grab_data(FixedVoltage_data.dictionary, 'C5245-X7Y0', ['NaN'], 
                       xfactor=1/Atot, yfactor=-1, 
                       # the below won't do anything here
                       m='^', col=color[3],
-                      lab='nolabel', l='')
+                      lab='nolabel', l='',script_name= "Fixed_Voltage")
 n = 0
 y_prime = [None]*len(y2)
 for y in y2:
@@ -404,7 +404,7 @@ x3, y3 = plt_PPC.grab_data(FixedVoltage_data.dictionary, 'C5245-X7Y0', ['NaN'], 
                       xfactor=1/Atot, yfactor=-1, 
                       # the below won't do anything here
                       m='^', col=color[3],
-                      lab='nolabel', l='')
+                      lab='nolabel', l='',script_name= "Fixed_Voltage")
 n = 0
 y_prime = [None]*len(y2)
 for y in y3:
