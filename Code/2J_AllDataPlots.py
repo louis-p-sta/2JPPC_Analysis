@@ -77,6 +77,7 @@ folderlist = folder_C5245 + folder_C5246 + folder_C5247 + folder_C5195
 DarkIV_data = PPC.PPC_data_collector(['DarkIV'], directory, folderlist)
 LightIV_data = PPC.PPC_data_collector(['LightIV'], directory, folderlist)
 LightIV_temp_data = PPC.PPC_data_collector(['LightIV'],directory,folder_C5245_27)
+LightIV_temp_data2 = PPC.PPC_data_collector(['LightIV'],directory,folder_C5245_23)
 
 # Add the 1550 nm laser powers to the dictionary.
 LightIV_data.get_powers_updated(power_table,
@@ -122,7 +123,28 @@ LightIV_temp_data.get_powers_updated(power_table, filters = 'No Filter',
                                keyNoFilter = 'Power No Filter (W)', 
                                keyUncertainty = 'Uncertainty',
                                AlternatekeyUncertainty = 'Uncertainty')
-
+#Also do it for the 23 degrees measurement
+LightIV_temp_data2.get_powers_updated(power_table,
+                                alternate_table = power_table_orig,
+                                filters = 'ND1 + ND2', 
+                               keyND1ND2 = 'ND1+ND2', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
+LightIV_temp_data2.get_powers_updated(power_table, filters = 'ND2', 
+                                alternate_table = power_table_orig,
+                               keyND2 = 'ND2', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
+LightIV_temp_data2.get_powers_updated(power_table, filters = 'ND1', 
+                                alternate_table = power_table_orig,
+                               keyND1 = 'ND1', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
+LightIV_temp_data2.get_powers_updated(power_table, filters = 'No Filter', 
+                                alternate_table = power_table_orig,
+                               keyNoFilter = 'Power No Filter (W)', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
 
 # Add the 1310 nm power to the dictioanry.
 # LightIV_data.get_powers_updated(power_table_1310nm, LaserWL = '1310nm',
@@ -157,6 +179,10 @@ LightIV_data.add_to_dict('initial', power_label = 'Power (W)',
                          alternate_power_label = 'Power (LTT tuned) (W)')
 LightIV_temp_data.add_to_dict('initial', power_label = 'Power (W)', 
                          alternate_power_label = 'Power (LTT tuned) (W)')
+LightIV_temp_data2.add_to_dict('Add_basic', power_label = 'Power (W)', 
+                         alternate_power_label = 'Power (LTT tuned) (W)')
+LightIV_temp_data2.add_to_dict('initial', power_label = 'Power (W)', 
+                         alternate_power_label = 'Power (LTT tuned) (W)')
                          
 # Some other optional things you can calculate but may not need to.
 LightIV_data.add_to_dict('fit_Voc_slope', Atot = 0.054)
@@ -170,6 +196,8 @@ lightDic = LightIV_data.dictionary
 
 lightDicTemp = LightIV_temp_data.dictionary
 
+lightDicTemp23 = LightIV_temp_data2.dictionary
+
 plt.close('all')
 
 #%% PLOT GLOBAL SETTINGS ########################################################
@@ -180,7 +208,7 @@ color_grad2 = sns.color_palette('Blues_r', n_colors = 130)
 # colors = (cycler(color=sns.color_palette('rocket',  n_colors = 48)))
 #
 sample = ['C5245-X7Y0','C5245-X3Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4', 'C5195-X25Y5', 'C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6'
-sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4', 'C5195-X25Y5', 'C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+sample_labels = ['C5245-X7Y0-25$\degree$C','C5245-X3Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4', 'C5195-X25Y5', 'C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
 dates = [None, None, None, None, None, None, None, None, None, None, None]
 colour_C5195 = color[0]
 colour_C5245 = color[1]
@@ -239,6 +267,12 @@ if plot_efficiency:
                               m = '^', col = color[3], 
                               lab = 'nolabel', l = '')
     ax1.plot(x1,y1,label = 'C5245-X7Y0-27$\degree$C')
+    x2,y2 = plt_PPC.grab_data(LightIV_temp_data2.dictionary, 'C5245-X7Y0',['18mm'],['all'],['all'], 
+                              'Power (W)', 'Eff',
+                              xfactor=1/Atot, yfactor = 1,
+                              m = '^', col = color[3], 
+                              lab = 'nolabel', l = '')
+    ax1.plot(x2,y2,label = 'C5245-X7Y0-23$\degree$C')
     ax1.set_xscale('log')
     ax1.grid(which='both')
     ax1.set_xlabel('Irradiance (W/cm$^{2}$)')

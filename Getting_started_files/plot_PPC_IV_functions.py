@@ -20,7 +20,7 @@ def grab_data(dataset, name, positions, filters, currents, xparam, yparam,
                   direction = None, date = None, laser_wavl = None, 
                   xfactor = 1, yfactor = 1, 
                   l = '-', m = None, col = None, 
-                  lab =  None, LaserWL = '1550nm', script_name = 'LightIV',
+                  lab =  None, LaserWL = '1550nm', script_name = None,
                   LaserB = None):
     """
     This grabs data in the exat same way the plot_params does except it does't 
@@ -87,13 +87,17 @@ def grab_data(dataset, name, positions, filters, currents, xparam, yparam,
                             # and (dataset[name][p][f][x]['Date'] == date or date == None)
                             # and (dataset[name][p][f][x]['Laser B Current (A)'] == LaserB) for x in curr])
                 else:
-                    curr = [x for x in curr if 
-                            (dataset[name][p][f][x]['Date'] == date or date == None)
-                            and (dataset[name][p][f][x]['Laser Wavelength'] == LaserWL)]
-                curr = [x for x in curr if 
-                        (dataset[name][p][f][x]['Direction'] == direction or direction == None)
-                        and (dataset[name][p][f][x]['Date'] == date or date == None)
-                        and (dataset[name][p][f][x]['Laser Wavelength'] == laser_wavl or laser_wavl == None)]
+                    try:
+                        curr = [x for x in curr if 
+                                (dataset[name][p][f][x]['Date'] == date or date == None)
+                                and (dataset[name][p][f][x]['Laser Wavelength'] == LaserWL)]
+                        curr = [x for x in curr if 
+                                (dataset[name][p][f][x]['Direction'] == direction or direction == None)
+                                and (dataset[name][p][f][x]['Date'] == date or date == None)
+                                and (dataset[name][p][f][x]['Laser Wavelength'] == laser_wavl or laser_wavl == None)]
+                    except:
+                        print("A current was not found")
+                   
             else:
                 if curr == ['all']:
                     try:
