@@ -69,7 +69,7 @@ power_table_orig = power_table_orig.dropna()
 # Samples you want to look at.
 # These lists of folders can be defined in the Sample_Names_and_Locations file
 # or elsewhere. This just puts them all together.
-folderlist = folder_C5245 + folder_C5246 + folder_C5247 + folder_C5195
+folderlist = folder_C5245 + folder_C5246 + folder_C5247# + folder_C5195
 
 # Put all the data into an initial dictionary. Choose what type of dictionary
 # you want (DarkIV, LightIV, FixedCurrent, FixedVoltage, LightBias) or combine
