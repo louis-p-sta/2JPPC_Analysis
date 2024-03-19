@@ -207,8 +207,8 @@ color_grad = sns.color_palette('rocket',  n_colors = 130)
 color_grad2 = sns.color_palette('Blues_r', n_colors = 130)
 # colors = (cycler(color=sns.color_palette('rocket',  n_colors = 48)))
 #
-sample = ['C5245-X7Y0','C5245-X3Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4', 'C5195-X25Y5', 'C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6'
-sample_labels = ['C5245-X7Y0-25$\degree$C','C5245-X3Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4', 'C5195-X25Y5', 'C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+sample = ['C5245-X7Y0'] # 'C5246-X12Y1', 'C5247-X7Y6'
+sample_labels = ['C5245-X7Y0-25$\degree$C'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
 dates = [None, None, None, None, None, None, None, None, None, None, None]
 colour_C5195 = color[0]
 colour_C5245 = color[1]
@@ -266,13 +266,13 @@ if plot_efficiency:
                               xfactor=1/Atot, yfactor = 1,
                               m = '^', col = color[3], 
                               lab = 'nolabel', l = '')
-    ax1.plot(x1,y1,label = 'C5245-X7Y0-27$\degree$C')
+    ax1.plot(x1,y1,c = colours[i+2], marker = markers[i+7], ls = linestyles[i+7], lw= linewidth,label = 'C5245-X7Y0-27$\degree$C')
     x2,y2 = plt_PPC.grab_data(LightIV_temp_data2.dictionary, 'C5245-X7Y0',['18mm'],['all'],['all'], 
                               'Power (W)', 'Eff',
                               xfactor=1/Atot, yfactor = 1,
                               m = '^', col = color[3], 
                               lab = 'nolabel', l = '')
-    ax1.plot(x2,y2,label = 'C5245-X7Y0-23$\degree$C')
+    ax1.plot(x2,y2,c = colours[i+4], marker = markers[i+4], ls = linestyles[i+1], lw= linewidth, label = 'C5245-X7Y0-23$\degree$C')
     ax1.set_xscale('log')
     ax1.grid(which='both')
     ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
