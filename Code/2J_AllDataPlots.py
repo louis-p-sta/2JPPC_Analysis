@@ -69,7 +69,7 @@ power_table_orig = power_table_orig.dropna()
 # Samples you want to look at.
 # These lists of folders can be defined in the Sample_Names_and_Locations file
 # or elsewhere. This just puts them all together.
-folderlist = folder_C5245 + folder_C5246 + folder_C5247 + folder_C5195
+folderlist = folder_C5245_25 + folder_C5246 + folder_C5247 + folder_C5195
 
 # Put all the data into an initial dictionary. Choose what type of dictionary
 # you want (DarkIV, LightIV, FixedCurrent, FixedVoltage, LightBias) or combine
@@ -145,7 +145,29 @@ LightIV_temp_data2.get_powers_updated(power_table, filters = 'No Filter',
                                keyNoFilter = 'Power No Filter (W)', 
                                keyUncertainty = 'Uncertainty',
                                AlternatekeyUncertainty = 'Uncertainty')
-
+FixedCurrent_data = PPC.PPC_data_collector(['FixedCurrent'],directory,folderlist)
+#Get the fixed voltage data
+FixedCurrent_data.get_powers_updated(power_table,
+                                alternate_table = power_table_orig,
+                                filters = 'ND1 + ND2', 
+                                keyND1ND2 = 'ND1+ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data.get_powers_updated(power_table, filters = 'ND2', 
+                                alternate_table = power_table_orig,
+                                keyND2 = 'ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data.get_powers_updated(power_table, filters = 'ND1', 
+                                alternate_table = power_table_orig,
+                                keyND1 = 'ND1', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data.get_powers_updated(power_table, filters = 'No Filter', 
+                                alternate_table = power_table_orig,
+                                keyNoFilter = 'Power No Filter (W)', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
 # Add the 1310 nm power to the dictioanry.
 # LightIV_data.get_powers_updated(power_table_1310nm, LaserWL = '1310nm',
 #                                 keyNoFilter1310= 'Power No Filter (W)')
