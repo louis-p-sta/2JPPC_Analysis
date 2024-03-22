@@ -281,12 +281,16 @@ sns.set_theme(context='poster', style="ticks",
                   'xtick.direction': 'in', 'ytick.direction': 'in',
                   'xtick.top': True, 'ytick.right': True,
                   'lines.markersize': markersize})
-plot_iv = False;
+plot_iv = True;
 plot_sr = False;
 plot_resistivity = False;
 plot_voc_jsc = False;
-plot_efficiency = True;
+plot_efficiency = False;
 plot_ff = False;
+plot_voc_vs_input = False;
+#%%PLOT VOC VS INPUT POWER
+
+
 #%% PLOT ALL Eff vs Irr #######################################################
 # Example of how you might plot efficiency vs. laser irradiance
 if plot_efficiency:
@@ -353,29 +357,40 @@ if plot_iv==True:
     
     # duplicated currents have (#)'s beside them. Sometimes it is useful/clearer to
     # only select ones.
-    curr = ['18.0', '18.0', '18.0','18.0','18.0','18.0', '18.0', '18.0', '18.0','18.0','18.0'] #What is this for? How to select filter?
+    curr = ['6.0']
     
-    for i in range(len(sample)):
-        x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['ND1'], [curr[i]],
-                              'Voltage (V)','Current (A)', 
-                              date =  None,
-                              LaserWL = '1550nm',
-                              direction = 'Forward',
-                              xfactor=1, yfactor=-1/Atot, 
-                              m='^', col=color[3],
-                              lab='nolabel', l='')
-        ax1.plot(x[0], y[0], c = colours[i], marker = None, ls = linestyles[i], lw = linewidth,
-                  label = sample_labels[i])
-    
+    x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[0], ['18mm'], ['ND1'], curr,
+                          'Voltage (V)','Current (A)', 
+                          date =  None,
+                          LaserWL = '1550nm',
+                          direction = 'Forward',
+                          xfactor=1, yfactor=-1/Atot, 
+                          m='^', col=color[3],
+                          lab='nolabel', l='')
+    ax1.plot(x[0], y[0], c = colours[0], marker = None, ls = linestyles[0], lw = linewidth,
+              label = sample_labels[0])
+    x1,y1 = plt_PPC.grab_data(LightIV_temp_data.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['6.0'], 
+                              'Voltage (V)','Current (A)',
+                              xfactor=1, yfactor = -1/Atot,
+                              m = '^', col = color[3], 
+                              lab = 'nolabel', l = '')
+    ax1.plot(x1[0],y1[0 ],c = colours[2], ls = linestyles[7], lw= linewidth,label='C5245-X7Y0-27$\degree$C')# + curr[0] + " " + "ND1")
+    x2,y2 = plt_PPC.grab_data(LightIV_temp_data2.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['6.0'], 
+                              'Voltage (V)','Current (A)',
+                              xfactor=1, yfactor = -1/Atot,
+                              m = '^', col = color[3], 
+                              lab = 'nolabel', l = '')
+    ax1.plot(x2[0],y2[0],c = colours[4], ls = linestyles[1], lw= linewidth,label = 'C5245-X7Y0-23$\degree$C')
     # ax1.set_xscale('log')
     # ax1.set_yscale('log')
     ax1.grid(which='both')
-    #ax1.set_ylim(-2.0, 6.0)
-    #ax1.set_xlim(-0.1, 1.2)
-    ax1.set_title('18 A ND1 2J PPCs', loc='right')
+    ax1.set_ylim(-0.25,0.75)
+    ax1.set_xlim(-0.1, 1.2)
+    ax1.set_title('6 A ND1 temperature comparison', loc='right')
     ax1.set_xlabel('Voltage (V)')
     ax1.set_ylabel('Current Density (A/cm$^{2}$)')
-    fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+    #fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+    fig1.legend().set_draggable(True)
     plt.show()
 #%% PLOT FILL FACOTR VS IRRANDIANCE #######################################################
 if plot_ff:
