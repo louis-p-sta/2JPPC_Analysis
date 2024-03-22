@@ -105,6 +105,8 @@ class PPC_data_collector:
                 self.dictionary.update(file_dict)                           # the sample name is unique
         else:
             name, pos, filt, laser_curr = file_info
+            if self.script_type == "FixedCurrent":
+                laser_curr = laser_curr.to_string()
             if name in self.dictionary.keys():
                 if pos in self.dictionary[name].keys():
                     if filt in self.dictionary[name][pos].keys():
@@ -292,16 +294,31 @@ class PPC_data_collector:
                 voltage = read_data3['Voltage (V)'].astype(float).to_numpy()
                 
                 # put all the file parameters in a dictionary
-                file_dict.update({name: {
-                    pos: {
-                        filt:{
-                            laser_curr: {
-                                'Date': date,
-                                'Laser Wavelength': laser_wavl,
-                                'Duration (s)': dur,
-                                'Fixed Current (A)': fixed_curr,
-                                'Time (s)': time,
-                                'Voltage (V)': voltage}}}}})
+                print(type(filt))
+                print(type(laser_curr))
+                print(laser_curr)
+                try:
+                    file_dict.update({name: {
+                        pos: {
+                            filt:{
+                                laser_curr: {
+                                    'Date': date,
+                                    'Laser Wavelength': laser_wavl,
+                                    'Duration (s)': dur,
+                                    'Fixed Current (A)': fixed_curr,
+                                    'Time (s)': time,
+                                    'Voltage (V)': voltage}}}}})
+                except:
+                    file_dict.update({name: {
+                        pos: {
+                            filt:{
+                                laser_curr.to_string(): {
+                                    'Date': date,
+                                    'Laser Wavelength': laser_wavl,
+                                    'Duration (s)': dur,
+                                    'Fixed Current (A)': fixed_curr,
+                                    'Time (s)': time,
+                                    'Voltage (V)': voltage}}}}})
                 
             elif self.script_type == 'FixedVoltage':
                 fixed_volt = read_data2.loc['Fixed Voltage (V)'].to_string()
@@ -503,6 +520,7 @@ class PPC_data_collector:
                     for curr in self.dictionary[name][pos][filt].keys():
                         if (LaserWL == '1550nm' and self.dictionary[name][pos][filt][curr]['Laser Wavelength'] == '1550nm'):
                             if filt == 'ND1 + ND2' and (filters == 'all' or filters == 'ND1 + ND2'):
+                                print("Ccurrent", curr)
                                 power = table.loc[float(curr.split('(')[0])][keyND1ND2]
                                 power_err = table.loc[float(curr.split('(')[0])][keyUncertainty]
                                 self.dictionary[name][pos][filt][curr].update({'Power (W)': power})

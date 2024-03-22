@@ -71,6 +71,8 @@ power_table_orig = power_table_orig.dropna()
 # or elsewhere. This just puts them all together.
 folderlist = folder_C5245_25 + folder_C5246 + folder_C5247 + folder_C5195
 
+folderlist_fixed_current = folder_C5245_27 + folder_C5245_23
+
 # Put all the data into an initial dictionary. Choose what type of dictionary
 # you want (DarkIV, LightIV, FixedCurrent, FixedVoltage, LightBias) or combine
 # dictionaries by adding multiple file types to one list.
@@ -145,8 +147,9 @@ LightIV_temp_data2.get_powers_updated(power_table, filters = 'No Filter',
                                keyNoFilter = 'Power No Filter (W)', 
                                keyUncertainty = 'Uncertainty',
                                AlternatekeyUncertainty = 'Uncertainty')
-FixedCurrent_data = PPC.PPC_data_collector(['FixedCurrent'],directory,folderlist)
-#Get the fixed voltage data
+#Get fixed current data
+FixedCurrent_data = PPC.PPC_data_collector(['FixedCurrent'],directory,folderlist_fixed_current)
+
 FixedCurrent_data.get_powers_updated(power_table,
                                 alternate_table = power_table_orig,
                                 filters = 'ND1 + ND2', 
@@ -219,6 +222,8 @@ lightDic = LightIV_data.dictionary
 lightDicTemp = LightIV_temp_data.dictionary
 
 lightDicTemp23 = LightIV_temp_data2.dictionary
+
+Fixed_Current = FixedCurrent_data.dictionary
 
 plt.close('all')
 
