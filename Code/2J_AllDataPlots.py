@@ -357,7 +357,7 @@ if plot_iv==True:
     
     # duplicated currents have (#)'s beside them. Sometimes it is useful/clearer to
     # only select ones.
-    curr = ['6.0']
+    curr = ['10.0']
     
     x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[0], ['18mm'], ['ND1'], curr,
                           'Voltage (V)','Current (A)', 
@@ -369,13 +369,13 @@ if plot_iv==True:
                           lab='nolabel', l='')
     ax1.plot(x[0], y[0], c = colours[0], marker = None, ls = linestyles[0], lw = linewidth,
               label = sample_labels[0])
-    x1,y1 = plt_PPC.grab_data(LightIV_temp_data.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['6.0'], 
+    x1,y1 = plt_PPC.grab_data(LightIV_temp_data.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['10.0'], 
                               'Voltage (V)','Current (A)',
                               xfactor=1, yfactor = -1/Atot,
                               m = '^', col = color[3], 
                               lab = 'nolabel', l = '')
     ax1.plot(x1[0],y1[0 ],c = colours[2], ls = linestyles[7], lw= linewidth,label='C5245-X7Y0-27$\degree$C')# + curr[0] + " " + "ND1")
-    x2,y2 = plt_PPC.grab_data(LightIV_temp_data2.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['6.0'], 
+    x2,y2 = plt_PPC.grab_data(LightIV_temp_data2.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['10.0'], 
                               'Voltage (V)','Current (A)',
                               xfactor=1, yfactor = -1/Atot,
                               m = '^', col = color[3], 
@@ -386,14 +386,14 @@ if plot_iv==True:
     ax1.grid(which='both')
     ax1.set_ylim(-0.25,0.75)
     ax1.set_xlim(-0.1, 1.2)
-    ax1.set_title('6 A ND1 temperature comparison', loc='right')
+    ax1.set_title(curr[0] + 'ND1 temperature comparison')
     ax1.set_xlabel('Voltage (V)')
     ax1.set_ylabel('Current Density (A/cm$^{2}$)')
     #fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
     fig1.legend().set_draggable(True)
     plt.show()
 #%% PLOT VOC OVER TIME
-if plot_iv==True:
+if plot_voc_vs_time==True:
     fig1, ax1 = plt.subplots(1, 1)
     fig1.set_size_inches(11, 9)
     # ax1.set_prop_cycle(colors)
@@ -408,28 +408,29 @@ if plot_iv==True:
     
     # duplicated currents have (#)'s beside them. Sometimes it is useful/clearer to
     # only select ones.
-    x1,y1 = plt_PPC.grab_data(FixedCurrent_data_23.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['6.0'], 
+    x1,y1 = plt_PPC.grab_data(FixedCurrent_data_27.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['     10.0'], 
                               'Time (s)','Voltage (V)',
                               xfactor=1, yfactor = 1,
                               m = '^', col = color[3], 
                               lab = 'nolabel', l = '')
-    ax1.plot(x1,y1,c = colours[2], ls = linestyles[7], lw= linewidth,label='C5245-X7Y0-27$\degree$C')# + curr[0] + " " + "ND1")
-    x2,y2 = plt_PPC.grab_data(FixedCurrent_data_23.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['6.0'], 
+    ax1.plot(x1[0],y1[0],c = colours[2], marker = markers[2], ls = linestyles[7], lw= linewidth,label='C5245-X7Y0-27$\degree$C')# + curr[0] + " " + "ND1")
+    x2,y2 = plt_PPC.grab_data(FixedCurrent_data_23.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['     10.0'], #Need five spaces before current value here, for some reason.
                               'Time (s)','Voltage (V)',
                               xfactor=1, yfactor = 1,
-                              m = '^', col = color[3], 
+                              m = '^', col = color[3],
                               lab = 'nolabel', l = '')
-    ax1.plot(x2,y2,c = colours[4], ls = linestyles[1], lw= linewidth,label = 'C5245-X7Y0-23$\degree$C')
+    ax1.plot(x2[0],y2[0],c = colours[4], marker = markers[4], ls = linestyles[1], lw= linewidth,label = 'C5245-X7Y0-23$\degree$C')
     # ax1.set_xscale('log')
     # ax1.set_yscale('log')
     ax1.grid(which='both')
     #ax1.set_ylim(-0.25,0.75)
     #ax1.set_xlim(-0.1, 1.2)
-    ax1.set_title('6 A ND1 temperature comparison', loc='right')
+    ax1.set_title('$V_{oc}$ over time (' + curr[0] + 'ND1)')
     ax1.set_xlabel('Time (s)')
     ax1.set_ylabel('$V_{oc}$ (V)')
     #fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
     fig1.legend().set_draggable(True)
+    plt.ginput(10)
     plt.show()
 #%% PLOT FILL FACOTR VS IRRANDIANCE #######################################################
 if plot_ff:
