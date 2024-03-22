@@ -288,6 +288,7 @@ plot_voc_jsc = False;
 plot_efficiency = False;
 plot_ff = False;
 plot_voc_vs_input = False;
+plot_voc_vs_time = True;
 #%%PLOT VOC VS INPUT POWER
 
 
@@ -339,7 +340,6 @@ if plot_efficiency:
     ax1.set_title("Efficiency of various 2J PPCs")
     fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
     plt.show()
-
 #%% PLOT SELECT IV CURVES #######################################################
 # # Example of how you might plot IV curves
 if plot_iv==True:
@@ -389,6 +389,45 @@ if plot_iv==True:
     ax1.set_title('6 A ND1 temperature comparison', loc='right')
     ax1.set_xlabel('Voltage (V)')
     ax1.set_ylabel('Current Density (A/cm$^{2}$)')
+    #fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+    fig1.legend().set_draggable(True)
+    plt.show()
+#%% PLOT VOC OVER TIME
+if plot_iv==True:
+    fig1, ax1 = plt.subplots(1, 1)
+    fig1.set_size_inches(11, 9)
+    # ax1.set_prop_cycle(colors)
+    ax1.axhline(0, c = 'k')
+    ax1.axvline(0, c = 'k')
+    
+    #sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
+    #sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+    #dates = [None, None, None, None, None, None, None, None, None]
+    #colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
+    #markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
+    
+    # duplicated currents have (#)'s beside them. Sometimes it is useful/clearer to
+    # only select ones.
+    x1,y1 = plt_PPC.grab_data(FixedCurrent_data_23.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['6.0'], 
+                              'Time (s)','Voltage (V)',
+                              xfactor=1, yfactor = 1,
+                              m = '^', col = color[3], 
+                              lab = 'nolabel', l = '')
+    ax1.plot(x1,y1,c = colours[2], ls = linestyles[7], lw= linewidth,label='C5245-X7Y0-27$\degree$C')# + curr[0] + " " + "ND1")
+    x2,y2 = plt_PPC.grab_data(FixedCurrent_data_23.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['6.0'], 
+                              'Time (s)','Voltage (V)',
+                              xfactor=1, yfactor = 1,
+                              m = '^', col = color[3], 
+                              lab = 'nolabel', l = '')
+    ax1.plot(x2,y2,c = colours[4], ls = linestyles[1], lw= linewidth,label = 'C5245-X7Y0-23$\degree$C')
+    # ax1.set_xscale('log')
+    # ax1.set_yscale('log')
+    ax1.grid(which='both')
+    #ax1.set_ylim(-0.25,0.75)
+    #ax1.set_xlim(-0.1, 1.2)
+    ax1.set_title('6 A ND1 temperature comparison', loc='right')
+    ax1.set_xlabel('Time (s)')
+    ax1.set_ylabel('$V_{oc}$ (V)')
     #fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
     fig1.legend().set_draggable(True)
     plt.show()
