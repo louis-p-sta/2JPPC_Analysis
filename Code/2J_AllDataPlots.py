@@ -71,7 +71,9 @@ power_table_orig = power_table_orig.dropna()
 # or elsewhere. This just puts them all together.
 folderlist = folder_C5245_25 + folder_C5246 + folder_C5247 + folder_C5195
 
-folderlist_fixed_current = folder_C5245_27 + folder_C5245_23
+folderlist_fixed_current_27 = folder_C5245_27
+
+folderlist_fixed_current_23 = folder_C5245_23
 
 # Put all the data into an initial dictionary. Choose what type of dictionary
 # you want (DarkIV, LightIV, FixedCurrent, FixedVoltage, LightBias) or combine
@@ -147,26 +149,50 @@ LightIV_temp_data2.get_powers_updated(power_table, filters = 'No Filter',
                                keyNoFilter = 'Power No Filter (W)', 
                                keyUncertainty = 'Uncertainty',
                                AlternatekeyUncertainty = 'Uncertainty')
-#Get fixed current data
-FixedCurrent_data = PPC.PPC_data_collector(['FixedCurrent'],directory,folderlist_fixed_current)
+#Get fixed current data for 27 degrees
+FixedCurrent_data_27 = PPC.PPC_data_collector(['FixedCurrent'],directory,folderlist_fixed_current_27)
 
-FixedCurrent_data.get_powers_updated(power_table,
+FixedCurrent_data_27.get_powers_updated(power_table,
                                 alternate_table = power_table_orig,
                                 filters = 'ND1 + ND2', 
                                 keyND1ND2 = 'ND1+ND2', 
                                 keyUncertainty = 'Uncertainty',
                                 AlternatekeyUncertainty = 'Uncertainty')
-FixedCurrent_data.get_powers_updated(power_table, filters = 'ND2', 
+FixedCurrent_data_27.get_powers_updated(power_table, filters = 'ND2', 
                                 alternate_table = power_table_orig,
                                 keyND2 = 'ND2', 
                                 keyUncertainty = 'Uncertainty',
                                 AlternatekeyUncertainty = 'Uncertainty')
-FixedCurrent_data.get_powers_updated(power_table, filters = 'ND1', 
+FixedCurrent_data_27.get_powers_updated(power_table, filters = 'ND1', 
                                 alternate_table = power_table_orig,
                                 keyND1 = 'ND1', 
                                 keyUncertainty = 'Uncertainty',
                                 AlternatekeyUncertainty = 'Uncertainty')
-FixedCurrent_data.get_powers_updated(power_table, filters = 'No Filter', 
+FixedCurrent_data_27.get_powers_updated(power_table, filters = 'No Filter', 
+                                alternate_table = power_table_orig,
+                                keyNoFilter = 'Power No Filter (W)', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+#Get fixed current data for 23 degrees
+FixedCurrent_data_23 = PPC.PPC_data_collector(['FixedCurrent'],directory,folderlist_fixed_current_23)
+
+FixedCurrent_data_23.get_powers_updated(power_table,
+                                alternate_table = power_table_orig,
+                                filters = 'ND1 + ND2', 
+                                keyND1ND2 = 'ND1+ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_23.get_powers_updated(power_table, filters = 'ND2', 
+                                alternate_table = power_table_orig,
+                                keyND2 = 'ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_23.get_powers_updated(power_table, filters = 'ND1', 
+                                alternate_table = power_table_orig,
+                                keyND1 = 'ND1', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_23.get_powers_updated(power_table, filters = 'No Filter', 
                                 alternate_table = power_table_orig,
                                 keyNoFilter = 'Power No Filter (W)', 
                                 keyUncertainty = 'Uncertainty',
@@ -223,7 +249,9 @@ lightDicTemp = LightIV_temp_data.dictionary
 
 lightDicTemp23 = LightIV_temp_data2.dictionary
 
-Fixed_Current = FixedCurrent_data.dictionary
+Fixed_Current_27 = FixedCurrent_data_27.dictionary
+
+Fixed_Current_23 = FixedCurrent_data_23.dictionary
 
 plt.close('all')
 
