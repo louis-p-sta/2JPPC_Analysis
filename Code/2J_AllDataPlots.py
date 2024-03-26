@@ -71,9 +71,6 @@ power_table_orig = power_table_orig.dropna()
 # or elsewhere. This just puts them all together.
 folderlist = folder_C5245_25 + folder_C5246 + folder_C5247 + folder_C5195
 
-folderlist_fixed_current_27 = folder_C5245_27
-
-folderlist_fixed_current_23 = folder_C5245_23
 
 # Put all the data into an initial dictionary. Choose what type of dictionary
 # you want (DarkIV, LightIV, FixedCurrent, FixedVoltage, LightBias) or combine
@@ -150,7 +147,7 @@ LightIV_temp_data2.get_powers_updated(power_table, filters = 'No Filter',
                                keyUncertainty = 'Uncertainty',
                                AlternatekeyUncertainty = 'Uncertainty')
 #Get fixed current data for 27 degrees
-FixedCurrent_data_27 = PPC.PPC_data_collector(['FixedCurrent'],directory,folderlist_fixed_current_27)
+FixedCurrent_data_27 = PPC.PPC_data_collector(['FixedCurrent'],directory,fixed_current_27)
 
 FixedCurrent_data_27.get_powers_updated(power_table,
                                 alternate_table = power_table_orig,
@@ -174,7 +171,7 @@ FixedCurrent_data_27.get_powers_updated(power_table, filters = 'No Filter',
                                 keyUncertainty = 'Uncertainty',
                                 AlternatekeyUncertainty = 'Uncertainty')
 #Get fixed current data for 23 degrees
-FixedCurrent_data_23 = PPC.PPC_data_collector(['FixedCurrent'],directory,folderlist_fixed_current_23)
+FixedCurrent_data_23 = PPC.PPC_data_collector(['FixedCurrent'],directory,fixed_current_23)
 
 FixedCurrent_data_23.get_powers_updated(power_table,
                                 alternate_table = power_table_orig,
@@ -284,10 +281,10 @@ plot_iv = False;
 plot_sr = False;
 plot_resistivity = False;
 plot_voc_jsc = False;
-plot_efficiency = True;
+plot_efficiency = False;
 plot_ff = False;
 plot_voc_vs_input = False;
-plot_voc_vs_time = False;
+plot_voc_vs_time = True;
 #%%PLOT VOC VS INPUT POWER
 
 
