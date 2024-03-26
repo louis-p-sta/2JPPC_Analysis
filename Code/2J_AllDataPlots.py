@@ -261,8 +261,7 @@ colors = (cycler(color=sns.color_palette('Set1')))
 color_grad = sns.color_palette('rocket',  n_colors = 130)
 color_grad2 = sns.color_palette('Blues_r', n_colors = 130)
 # colors = (cycler(color=sns.color_palette('rocket',  n_colors = 48)))
-#
-sample = ['C5245-X7Y0'] # 'C5246-X12Y1', 'C5247-X7Y6'
+sample = ['C5245-X7Y0']#'C5245-X3Y1','C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15' # 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'
 sample_labels = ['C5245-X7Y0-25$\degree$C'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
 dates = [None, None, None, None, None, None, None, None, None, None, None]
 colour_C5195 = color[0]
@@ -281,14 +280,14 @@ sns.set_theme(context='poster', style="ticks",
                   'xtick.direction': 'in', 'ytick.direction': 'in',
                   'xtick.top': True, 'ytick.right': True,
                   'lines.markersize': markersize})
-plot_iv = True;
+plot_iv = False;
 plot_sr = False;
 plot_resistivity = False;
 plot_voc_jsc = False;
-plot_efficiency = False;
+plot_efficiency = True;
 plot_ff = False;
 plot_voc_vs_input = False;
-plot_voc_vs_time = True;
+plot_voc_vs_time = False;
 #%%PLOT VOC VS INPUT POWER
 
 
@@ -326,13 +325,13 @@ if plot_efficiency:
                               xfactor=1/Atot, yfactor = 1,
                               m = '^', col = color[3], 
                               lab = 'nolabel', l = '')
-    ax1.plot(x1,y1,c = colours[i+2], marker = markers[i+7], ls = linestyles[i+7], lw= linewidth,label = 'C5245-X7Y0-27$\degree$C')
+    ax1.plot(x1,y1,c = 'red', marker = '+', ls = 'solid',markersize = 5, lw= linewidth,label = 'C5245-X7Y0-27$\degree$C')
     x2,y2 = plt_PPC.grab_data(LightIV_temp_data2.dictionary, 'C5245-X7Y0',['18mm'],['all'],['all'], 
                               'Power (W)', 'Eff',
                               xfactor=1/Atot, yfactor = 1,
                               m = '^', col = color[3], 
                               lab = 'nolabel', l = '')
-    ax1.plot(x2,y2,c = colours[i+4], marker = markers[i+4], ls = linestyles[i+1], lw= linewidth, label = 'C5245-X7Y0-23$\degree$C')
+    ax1.plot(x2,y2,c = 'blue', marker = '+',markersize = 5, ls = 'solid', lw= linewidth, label = 'C5245-X7Y0-23$\degree$C')
     ax1.set_xscale('log')
     ax1.grid(which='both')
     ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
@@ -354,11 +353,10 @@ if plot_iv==True:
     #dates = [None, None, None, None, None, None, None, None, None]
     #colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
     #markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
-    
+    #sample_labels_temp = ["C5245-X7Y0 ND1 10A", "C5245-X7Y0 ND1 12A","C5245-X7Y0 ND1 14A"]
     # duplicated currents have (#)'s beside them. Sometimes it is useful/clearer to
     # only select ones.
-    curr = ['10.0']
-    
+    curr = ['12.0']
     x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[0], ['18mm'], ['ND1'], curr,
                           'Voltage (V)','Current (A)', 
                           date =  None,
@@ -369,13 +367,13 @@ if plot_iv==True:
                           lab='nolabel', l='')
     ax1.plot(x[0], y[0], c = colours[0], marker = None, ls = linestyles[0], lw = linewidth,
               label = sample_labels[0])
-    x1,y1 = plt_PPC.grab_data(LightIV_temp_data.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['10.0'], 
+    x1,y1 = plt_PPC.grab_data(LightIV_temp_data.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['12.0'], 
                               'Voltage (V)','Current (A)',
                               xfactor=1, yfactor = -1/Atot,
                               m = '^', col = color[3], 
                               lab = 'nolabel', l = '')
     ax1.plot(x1[0],y1[0 ],c = colours[2], ls = linestyles[7], lw= linewidth,label='C5245-X7Y0-27$\degree$C')# + curr[0] + " " + "ND1")
-    x2,y2 = plt_PPC.grab_data(LightIV_temp_data2.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['10.0'], 
+    x2,y2 = plt_PPC.grab_data(LightIV_temp_data2.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['12.0'], 
                               'Voltage (V)','Current (A)',
                               xfactor=1, yfactor = -1/Atot,
                               m = '^', col = color[3], 
@@ -386,7 +384,7 @@ if plot_iv==True:
     ax1.grid(which='both')
     ax1.set_ylim(-0.25,0.75)
     ax1.set_xlim(-0.1, 1.2)
-    ax1.set_title(curr[0] + 'ND1 temperature comparison')
+    ax1.set_title('12 A ND1 temperature comparison')
     ax1.set_xlabel('Voltage (V)')
     ax1.set_ylabel('Current Density (A/cm$^{2}$)')
     #fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
@@ -408,13 +406,13 @@ if plot_voc_vs_time==True:
     
     # duplicated currents have (#)'s beside them. Sometimes it is useful/clearer to
     # only select ones.
-    x1,y1 = plt_PPC.grab_data(FixedCurrent_data_27.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['     10.0'], 
+    x1,y1 = plt_PPC.grab_data(FixedCurrent_data_27.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['     12.0'], 
                               'Time (s)','Voltage (V)',
                               xfactor=1, yfactor = 1,
                               m = '^', col = color[3], 
                               lab = 'nolabel', l = '')
     ax1.plot(x1[0],y1[0],c = colours[2], marker = markers[2], ls = linestyles[7], lw= linewidth,label='C5245-X7Y0-27$\degree$C')# + curr[0] + " " + "ND1")
-    x2,y2 = plt_PPC.grab_data(FixedCurrent_data_23.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['     10.0'], #Need five spaces before current value here, for some reason.
+    x2,y2 = plt_PPC.grab_data(FixedCurrent_data_23.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['     12.0'], #Need five spaces before current value here, for some reason.
                               'Time (s)','Voltage (V)',
                               xfactor=1, yfactor = 1,
                               m = '^', col = color[3],
@@ -425,7 +423,7 @@ if plot_voc_vs_time==True:
     ax1.grid(which='both')
     #ax1.set_ylim(-0.25,0.75)
     #ax1.set_xlim(-0.1, 1.2)
-    ax1.set_title('$V_{oc}$ over time (' + curr[0] + 'ND1)')
+    ax1.set_title('$V_{oc}$ over time (12 A ND1)')
     ax1.set_xlabel('Time (s)')
     ax1.set_ylabel('$V_{oc}$ (V)')
     #fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
@@ -580,7 +578,7 @@ if plot_resistivity:
         # This grab_data function goes into the data and grabs certain parameters 
         # you specifiy. In this case the power and efficiency.
         # Select the dictionary you want to pull from, the  focus lens position, 
-        # the filter(s) you want, and the laser current(s) you want to pull
+        # the filter(s) you want, and the laser current(s) you wSant to pull
         x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
                               'Power (W)', 'Inverse_slope_at_Voc(1/m)',
                               # pull out data only from a specific date (optional)
