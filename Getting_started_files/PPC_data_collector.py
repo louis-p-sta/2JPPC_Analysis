@@ -18,7 +18,6 @@ from scipy.interpolate import interp1d
 import glob
 import plot_PPC_IV_functions as plt_PPC
 from scipy import constants as const
-
 class PPC_data_collector:
     
     def __init__(self, script_type, data_dir, folderlist):
@@ -149,6 +148,7 @@ class PPC_data_collector:
                     nested dictionary keys.
 
         """
+        #global read_data3
         file_dict = {} # initiate an empty dictionary
         if self.script_type == 'DarkIV':
             file_dict.update({name: {
@@ -157,6 +157,7 @@ class PPC_data_collector:
             
             new_header = read_data.iloc[9]
             read_data3 = read_data.iloc[10:]
+            #print(read_data3)
             read_data3.columns = new_header
             voltage = read_data3['Voltage (V)'].astype(float).to_numpy()
             current = read_data3['Current (A)'].astype(float).to_numpy()
@@ -286,13 +287,11 @@ class PPC_data_collector:
             elif self.script_type == 'FixedCurrent':
                 fixed_curr = read_data2.loc['Fixed Current (A)'].to_string()
                 fixed_curr = fixed_curr.lstrip('     ')
-                
-                new_header = read_data.iloc[15]
-                read_data3 = read_data.iloc[16:]
+                new_header = read_data.iloc[16]
+                read_data3 = read_data.iloc[17:]
                 read_data3.columns = new_header
                 time = read_data3['Time (s)'].astype(float).to_numpy()
                 voltage = read_data3['Voltage (V)'].astype(float).to_numpy()
-                
                 # put all the file parameters in a dictionary
                 print(type(filt))
                 print(type(laser_curr))
