@@ -23,8 +23,8 @@ import sys
 
 # Add the paths to where you keep the measurements (.sciv files) and to where you
 # are keeping the PPC_data_collector.py and plot_PPC_IV_functions.py files.
-sys.path.append('C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data\\') #!!!
-sys.path.append('C:\\Users\\louis\\Sunlab Analysis Local\\Two-junction\\Getting_started_files') #!!!
+sys.path.append('C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data - Cleaned for Paige\\') #!!!
+sys.path.append('C:\\Users\\louis\\Sunlab\\2JPPC_Analysis\Getting_started_files') #!!!
 from Sample_Names_and_Locations import *
 import PPC_data_collector as PPC
 import plot_PPC_IV_functions as plt_PPC
@@ -281,10 +281,10 @@ plot_iv = False;
 plot_sr = False;
 plot_resistivity = False;
 plot_voc_jsc = False;
-plot_efficiency = False;
+plot_efficiency = True;
 plot_ff = False;
 plot_voc_vs_input = False;
-plot_voc_vs_time = True;
+plot_voc_vs_time = False;
 #%%PLOT VOC VS INPUT POWER
 
 
