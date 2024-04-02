@@ -23,7 +23,7 @@ import sys
 
 # Add the paths to where you keep the measurements (.sciv files) and to where you
 # are keeping the PPC_data_collector.py and plot_PPC_IV_functions.py files.
-sys.path.append('C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data - Cleaned for Paige\\') #!!!
+sys.path.append('C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data\\') #!!!
 sys.path.append('C:\\Users\\louis\\Sunlab\\2JPPC_Analysis\Getting_started_files') #!!!
 from Sample_Names_and_Locations import *
 import PPC_data_collector as PPC
@@ -195,7 +195,29 @@ FixedCurrent_data_23.get_powers_updated(power_table, filters = 'No Filter',
                                 keyUncertainty = 'Uncertainty',
                                 AlternatekeyUncertainty = 'Uncertainty')
 #Get fixed current data for 25 degrees
+FixedCurrent_data_25 = PPC.PPC_data_collector(['FixedCurrent'],directory,fixed_current_25)
 
+FixedCurrent_data_25.get_powers_updated(power_table,
+                                alternate_table = power_table_orig,
+                                filters = 'ND1 + ND2', 
+                                keyND1ND2 = 'ND1+ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_25.get_powers_updated(power_table, filters = 'ND2', 
+                                alternate_table = power_table_orig,
+                                keyND2 = 'ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_25.get_powers_updated(power_table, filters = 'ND1', 
+                                alternate_table = power_table_orig,
+                                keyND1 = 'ND1', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_25.get_powers_updated(power_table, filters = 'No Filter', 
+                                alternate_table = power_table_orig,
+                                keyNoFilter = 'Power No Filter (W)', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
 # Add the 1310 nm power to the dictioanry.
 # LightIV_data.get_powers_updated(power_table_1310nm, LaserWL = '1310nm',
 #                                 keyNoFilter1310= 'Power No Filter (W)')
@@ -251,6 +273,8 @@ lightDicTemp23 = LightIV_temp_data2.dictionary
 Fixed_Current_27 = FixedCurrent_data_27.dictionary
 
 Fixed_Current_23 = FixedCurrent_data_23.dictionary
+
+Fixed_Current_25 = FixedCurrent_data_25.dictionary
 
 plt.close('all')
 #%%SELECTIVE PLOTTING VARIABLES#######################
@@ -431,6 +455,12 @@ if plot_voc_vs_time==True:
                               m = '^', col = color[3],
                               lab = 'nolabel', l = '')
     ax1.plot(x2[0],y2[0],c = colours[4], marker = markers[4], ls = linestyles[1], lw= linewidth,label = 'C5245-X7Y0-23$\degree$C')
+    x3,y3 = plt_PPC.grab_data(FixedCurrent_data_25.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['     12.0'], #Need five spaces before current value here, for some reason.
+                              'Time (s)','Voltage (V)',
+                              xfactor=1, yfactor = 1,
+                              m = '^', col = color[3],
+                              lab = 'nolabel', l = '')
+    ax1.plot(x3[0],y3[0],c = colours[7], marker = markers[7], ls = linestyles[1], lw= linewidth,label = 'C5245-X7Y0-25$\degree$C')
     # ax1.set_xscale('log')
     # ax1.set_yscale('log')
     ax1.grid(which='both')

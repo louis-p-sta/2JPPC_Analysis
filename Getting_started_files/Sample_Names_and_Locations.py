@@ -9,7 +9,7 @@ other scripts.
 """
 
 # The location of the folders containing the raw measurement data.
-directory = "C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data\\"
+directory = "C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data - Cleaned for Paige\\"
 
 # Place the names of the folders that contain the raw .sciv files in these 
 # lists.
@@ -35,6 +35,8 @@ folder_C5245_25 = ['20240109_C5245_X3Y1','20240118_C5245_X6Y1', '20240326_C5245_
 folder_C5245_27 = ['20240314_C5245_X7Y0-27degIV']#, '20240326_C5245_X7Y0-27degFixedCurrent'
 
 fixed_current_23 = ['20240326_C5245_X7Y0-23degFixedCurrent']
+
+fixed_current_25 = ['20240326_C5245_X7Y0-25degFixedCurrent']
 
 fixed_current_27 = ['20240326_C5245_X7Y0-27degFixedCurrent']
 
