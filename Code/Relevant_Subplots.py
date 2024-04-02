@@ -89,7 +89,7 @@ power_table_orig = power_table_orig.dropna()
 # Samples you want to look at.
 # These lists of folders can be defined in the Sample_Names_and_Locations file
 # or elsewhere. This just puts them all together.
-folderlist = folder_C5245 + folder_C5246 + folder_C5247
+folderlist = folder_C5245_25 + folder_C5246 + folder_C5247
 
 # Put all the data into an initial dictionary. Choose what type of dictionary
 # you want (DarkIV, LightIV, FixedCurrent, FixedVoltage, LightBias) or combine
@@ -167,7 +167,7 @@ lightDic = LightIV_data.dictionary
 # ax1.axhline(0, c = 'k')
 # ax1.axvline(0, c = 'k')
 
-sample = ['C5245-X7Y0', 'C5245-X6Y1', 'C5246-X12Y1', 'C5247-X7Y5'] # 'C5246-X12Y1', 'C5247-X7Y6'
+sample = ['C5245-X7Y0', 'C5245-X3Y1', 'C5246-X12Y1', 'C5247-X7Y5'] # 'C5246-X12Y1', 'C5247-X7Y6'
 sample_labels = ['C5245-X7Y0 (r-h/homo)','C5245-X3Y1 (r-h/homo)', 'C5246-X12Y1 (f-h/homo)','C5247-X7Y5 (homo/homo)'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
 dates = [None, None, None, None]
 colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]

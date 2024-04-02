@@ -194,6 +194,8 @@ FixedCurrent_data_23.get_powers_updated(power_table, filters = 'No Filter',
                                 keyNoFilter = 'Power No Filter (W)', 
                                 keyUncertainty = 'Uncertainty',
                                 AlternatekeyUncertainty = 'Uncertainty')
+#Get fixed current data for 25 degrees
+
 # Add the 1310 nm power to the dictioanry.
 # LightIV_data.get_powers_updated(power_table_1310nm, LaserWL = '1310nm',
 #                                 keyNoFilter1310= 'Power No Filter (W)')
@@ -252,6 +254,7 @@ Fixed_Current_23 = FixedCurrent_data_23.dictionary
 
 plt.close('all')
 #%%SELECTIVE PLOTTING VARIABLES#######################
+plot_all = True;
 show_all_samples = True;
 plot_iv = False;
 plot_sr = False;
@@ -259,8 +262,15 @@ plot_resistivity = False;
 plot_voc_jsc = False;
 plot_efficiency = True;
 plot_ff = False;
-plot_voc_vs_input = False;
 plot_voc_vs_time = False;
+if plot_all:
+    plot_iv = True;
+    plot_sr = True;
+    plot_resistivity = True;
+    plot_voc_jsc = True;
+    plot_efficiency = True;
+    plot_ff = True;
+    plot_voc_vs_time = True;
 
 #%% PLOT GLOBAL SETTINGS ########################################################
 color = sns.color_palette('Set1')
@@ -359,32 +369,33 @@ if plot_iv==True:
     # duplicated currents have (#)'s beside them. Sometimes it is useful/clearer to
     # only select ones.
     curr = ['12.0']
-    x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[0], ['18mm'], ['ND1'], curr,
-                          'Voltage (V)','Current (A)', 
-                          date =  None,
-                          LaserWL = '1550nm',
-                          direction = 'Forward',
-                          xfactor=1, yfactor=-1/Atot, 
-                          m='^', col=color[3],
-                          lab='nolabel', l='')
-    ax1.plot(x[0], y[0], c = colours[0], marker = None, ls = linestyles[0], lw = linewidth,
-              label = sample_labels[0])
+    for i in range(len(sample)):
+        x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['ND1'], curr,
+                              'Voltage (V)','Current (A)', 
+                              date =  None,
+                              LaserWL = '1550nm',
+                              direction = 'Forward',
+                              xfactor=1, yfactor=-1/Atot, 
+                              m='^', col=color[3],
+                              lab='nolabel', l='')
+        ax1.plot(x[0], y[0], c = colours[i], marker = None, ls = linestyles[i], lw = linewidth,
+                  label = sample_labels[i])
     x1,y1 = plt_PPC.grab_data(LightIV_temp_data.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['12.0'], 
                               'Voltage (V)','Current (A)',
                               xfactor=1, yfactor = -1/Atot,
                               m = '^', col = color[3], 
                               lab = 'nolabel', l = '')
-    ax1.plot(x1[0],y1[0 ],c = colours[2], ls = linestyles[7], lw= linewidth,label='C5245-X7Y0-27$\degree$C')# + curr[0] + " " + "ND1")
+    ax1.plot(x1[0],y1[0 ],c = 'red', ls = 'solid', lw= linewidth,label='C5245-X7Y0-27$\degree$C')# + curr[0] + " " + "ND1")
     x2,y2 = plt_PPC.grab_data(LightIV_temp_data2.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['12.0'], 
                               'Voltage (V)','Current (A)',
                               xfactor=1, yfactor = -1/Atot,
                               m = '^', col = color[3], 
                               lab = 'nolabel', l = '')
-    ax1.plot(x2[0],y2[0],c = colours[4], ls = linestyles[1], lw= linewidth,label = 'C5245-X7Y0-23$\degree$C')
+    ax1.plot(x2[0],y2[0],c = 'blue', ls = 'solid', lw= linewidth,label = 'C5245-X7Y0-23$\degree$C')
     # ax1.set_xscale('log')
     # ax1.set_yscale('log')
     ax1.grid(which='both')
-    ax1.set_ylim(-0.25,0.75)
+    ax1.set_ylim(-0.25,2.8)
     ax1.set_xlim(-0.1, 1.2)
     ax1.set_title('12 A ND1 temperature comparison')
     ax1.set_xlabel('Voltage (V)')
@@ -517,7 +528,7 @@ if plot_sr:
     ax1.set_title("Spectral response as function of input power")
     fig1.legend(framealpha=1, loc = "upper left", fontsize = legend_fontsize).set_draggable(True)
     plt.show()
-#%% PLOT ISC-VOC##############################################################
+#%% PLOT JSC-VOC##############################################################
 if plot_voc_jsc:
     fig1, ax1 = plt.subplots(1, 1)
     fig1.set_size_inches(11, 9)
