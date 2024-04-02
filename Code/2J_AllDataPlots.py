@@ -251,6 +251,16 @@ Fixed_Current_27 = FixedCurrent_data_27.dictionary
 Fixed_Current_23 = FixedCurrent_data_23.dictionary
 
 plt.close('all')
+#%%SELECTIVE PLOTTING VARIABLES#######################
+show_all_samples = True;
+plot_iv = False;
+plot_sr = False;
+plot_resistivity = False;
+plot_voc_jsc = False;
+plot_efficiency = True;
+plot_ff = False;
+plot_voc_vs_input = False;
+plot_voc_vs_time = False;
 
 #%% PLOT GLOBAL SETTINGS ########################################################
 color = sns.color_palette('Set1')
@@ -258,8 +268,13 @@ colors = (cycler(color=sns.color_palette('Set1')))
 color_grad = sns.color_palette('rocket',  n_colors = 130)
 color_grad2 = sns.color_palette('Blues_r', n_colors = 130)
 # colors = (cycler(color=sns.color_palette('rocket',  n_colors = 48)))
-sample = ['C5245-X7Y0']#'C5245-X3Y1','C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15' # 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'
-sample_labels = ['C5245-X7Y0-25$\degree$C'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+if show_all_samples:
+    sample = ['C5245-X7Y0','C5245-X3Y1','C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'] # 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15']#'C5245-X3Y1','C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15' # 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'
+    sample_labels = ['C5245-X7Y0-25$\degree$C','C5245-X3Y1','C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'] # 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+else:
+    sample = ['C5245-X7Y0']#'C5245-X3Y1','C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15' # 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'
+    sample_labels = ['C5245-X7Y0-25$\degree$C'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+    
 dates = [None, None, None, None, None, None, None, None, None, None, None]
 colour_C5195 = color[0]
 colour_C5245 = color[1]
@@ -277,16 +292,6 @@ sns.set_theme(context='poster', style="ticks",
                   'xtick.direction': 'in', 'ytick.direction': 'in',
                   'xtick.top': True, 'ytick.right': True,
                   'lines.markersize': markersize})
-plot_iv = False;
-plot_sr = False;
-plot_resistivity = False;
-plot_voc_jsc = False;
-plot_efficiency = True;
-plot_ff = False;
-plot_voc_vs_input = False;
-plot_voc_vs_time = False;
-#%%PLOT VOC VS INPUT POWER
-
 
 #%% PLOT ALL Eff vs Irr #######################################################
 # Example of how you might plot efficiency vs. laser irradiance

@@ -179,6 +179,7 @@ class PPC_data_collector:
             filt = filt.replace('ND2 and ND1', 'ND1 + ND2')
             filt = filt.replace('None', 'No Filter')
             filt = filt.replace('NoFilter', 'No Filter')
+            filt = filt.replace('NaN','No Filter')
             filt = filt.replace('ND2 + ND1', 'ND1 + ND2')
             filt = filt.replace('ND1+ND2', 'ND1 + ND2')
             filt = filt.replace('ND2+ND1', 'ND1 + ND2')
