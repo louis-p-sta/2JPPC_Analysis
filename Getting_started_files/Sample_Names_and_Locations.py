@@ -34,6 +34,8 @@ folder_C5245_25 = ['20240109_C5245_X3Y1','20240118_C5245_X6Y1', '20240326_C5245_
 
 folder_C5245_27 = ['20240314_C5245_X7Y0-27degIV']#, '20240326_C5245_X7Y0-27degFixedCurrent'
 
+fixed_voltage = ['20240222_C5245_X7Y0-FixedVoltage']
+
 fixed_current_23 = ['20240326_C5245_X7Y0-23degFixedCurrent']
 
 fixed_current_25 = ['20240326_C5245_X7Y0-25degFixedCurrent']
