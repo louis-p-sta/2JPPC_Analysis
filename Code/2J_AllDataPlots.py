@@ -23,8 +23,8 @@ import sys
 
 # Add the paths to where you keep the measurements (.sciv files) and to where you
 # are keeping the PPC_data_collector.py and plot_PPC_IV_functions.py files.
-sys.path.append('C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data\\') #!!!
-sys.path.append('C:\\Users\\louis\\Sunlab Analysis Local\\Two-junction\\Getting_started_files') #!!!
+sys.path.append('C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\DataCleanCopy\\') #!!!
+sys.path.append('C:\\Users\\louis\\Sunlab\\2JPPC_Analysis\Getting_started_files') #!!!
 from Sample_Names_and_Locations import *
 import PPC_data_collector as PPC
 import plot_PPC_IV_functions as plt_PPC
@@ -32,11 +32,11 @@ import plot_PPC_IV_functions as plt_PPC
 #%% DATA LOCATIONS ##############################################################
 
 # Path to where the data is located. Same as in the import section.
-directory = 'C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data\\' #!!!
+directory = 'C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\DataCleanCopy\\' #!!!
 
 # Laser power measurements
 # Path to where the 1520 nm laser power file is being kept.
-power_folder = 'C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data\\' #!!!
+power_folder = 'C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\DataCleanCopy\\' #!!!
 power_file = '2023-10-02-Compiled_Power_Measurements_for_LTT_1520nm.xlsx'
 power_table = pd.read_excel(power_folder+power_file, 
                             sheet_name = 'Values_for_Current_Use',
@@ -69,13 +69,16 @@ power_table_orig = power_table_orig.dropna()
 # Samples you want to look at.
 # These lists of folders can be defined in the Sample_Names_and_Locations file
 # or elsewhere. This just puts them all together.
-folderlist = folder_C5245 + folder_C5246 + folder_C5247 + folder_C5195
+folderlist = folder_C5245_25 + folder_C5246 + folder_C5247 + folder_C5195
+
 
 # Put all the data into an initial dictionary. Choose what type of dictionary
 # you want (DarkIV, LightIV, FixedCurrent, FixedVoltage, LightBias) or combine
 # dictionaries by adding multiple file types to one list.
 DarkIV_data = PPC.PPC_data_collector(['DarkIV'], directory, folderlist)
 LightIV_data = PPC.PPC_data_collector(['LightIV'], directory, folderlist)
+LightIV_temp_data = PPC.PPC_data_collector(['LightIV'],directory,folder_C5245_27)
+LightIV_temp_data2 = PPC.PPC_data_collector(['LightIV'],directory,folder_C5245_23)
 
 # Add the 1550 nm laser powers to the dictionary.
 LightIV_data.get_powers_updated(power_table,
@@ -99,7 +102,122 @@ LightIV_data.get_powers_updated(power_table, filters = 'No Filter',
                                keyNoFilter = 'Power No Filter (W)', 
                                keyUncertainty = 'Uncertainty',
                                AlternatekeyUncertainty = 'Uncertainty')
+# Do it for the temperature corrected dictionary
+LightIV_temp_data.get_powers_updated(power_table,
+                                alternate_table = power_table_orig,
+                                filters = 'ND1 + ND2', 
+                               keyND1ND2 = 'ND1+ND2', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
+LightIV_temp_data.get_powers_updated(power_table, filters = 'ND2', 
+                                alternate_table = power_table_orig,
+                               keyND2 = 'ND2', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
+LightIV_temp_data.get_powers_updated(power_table, filters = 'ND1', 
+                                alternate_table = power_table_orig,
+                               keyND1 = 'ND1', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
+LightIV_temp_data.get_powers_updated(power_table, filters = 'No Filter', 
+                                alternate_table = power_table_orig,
+                               keyNoFilter = 'Power No Filter (W)', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
+#Also do it for the 23 degrees measurement
+LightIV_temp_data2.get_powers_updated(power_table,
+                                alternate_table = power_table_orig,
+                                filters = 'ND1 + ND2', 
+                               keyND1ND2 = 'ND1+ND2', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
+LightIV_temp_data2.get_powers_updated(power_table, filters = 'ND2', 
+                                alternate_table = power_table_orig,
+                               keyND2 = 'ND2', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
+LightIV_temp_data2.get_powers_updated(power_table, filters = 'ND1', 
+                                alternate_table = power_table_orig,
+                               keyND1 = 'ND1', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
+LightIV_temp_data2.get_powers_updated(power_table, filters = 'No Filter', 
+                                alternate_table = power_table_orig,
+                               keyNoFilter = 'Power No Filter (W)', 
+                               keyUncertainty = 'Uncertainty',
+                               AlternatekeyUncertainty = 'Uncertainty')
+#Get fixed current data for 27 degrees
+FixedCurrent_data_27 = PPC.PPC_data_collector(['FixedCurrent'],directory,fixed_current_27)
 
+FixedCurrent_data_27.get_powers_updated(power_table,
+                                alternate_table = power_table_orig,
+                                filters = 'ND1 + ND2', 
+                                keyND1ND2 = 'ND1+ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_27.get_powers_updated(power_table, filters = 'ND2', 
+                                alternate_table = power_table_orig,
+                                keyND2 = 'ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_27.get_powers_updated(power_table, filters = 'ND1', 
+                                alternate_table = power_table_orig,
+                                keyND1 = 'ND1', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_27.get_powers_updated(power_table, filters = 'No Filter', 
+                                alternate_table = power_table_orig,
+                                keyNoFilter = 'Power No Filter (W)', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+#Get fixed current data for 23 degrees
+FixedCurrent_data_23 = PPC.PPC_data_collector(['FixedCurrent'],directory,fixed_current_23)
+
+FixedCurrent_data_23.get_powers_updated(power_table,
+                                alternate_table = power_table_orig,
+                                filters = 'ND1 + ND2', 
+                                keyND1ND2 = 'ND1+ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_23.get_powers_updated(power_table, filters = 'ND2', 
+                                alternate_table = power_table_orig,
+                                keyND2 = 'ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_23.get_powers_updated(power_table, filters = 'ND1', 
+                                alternate_table = power_table_orig,
+                                keyND1 = 'ND1', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_23.get_powers_updated(power_table, filters = 'No Filter', 
+                                alternate_table = power_table_orig,
+                                keyNoFilter = 'Power No Filter (W)', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+#Get fixed current data for 25 degrees
+FixedCurrent_data_25 = PPC.PPC_data_collector(['FixedCurrent'],directory,fixed_current_25)
+
+FixedCurrent_data_25.get_powers_updated(power_table,
+                                alternate_table = power_table_orig,
+                                filters = 'ND1 + ND2', 
+                                keyND1ND2 = 'ND1+ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_25.get_powers_updated(power_table, filters = 'ND2', 
+                                alternate_table = power_table_orig,
+                                keyND2 = 'ND2', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_25.get_powers_updated(power_table, filters = 'ND1', 
+                                alternate_table = power_table_orig,
+                                keyND1 = 'ND1', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
+FixedCurrent_data_25.get_powers_updated(power_table, filters = 'No Filter', 
+                                alternate_table = power_table_orig,
+                                keyNoFilter = 'Power No Filter (W)', 
+                                keyUncertainty = 'Uncertainty',
+                                AlternatekeyUncertainty = 'Uncertainty')
 # Add the 1310 nm power to the dictioanry.
 # LightIV_data.get_powers_updated(power_table_1310nm, LaserWL = '1310nm',
 #                                 keyNoFilter1310= 'Power No Filter (W)')
@@ -131,6 +249,14 @@ LightIV_data.get_powers_updated(power_table, filters = 'No Filter',
 # with calibrated vs. uncalibrated values.)  
 LightIV_data.add_to_dict('initial', power_label = 'Power (W)', 
                          alternate_power_label = 'Power (LTT tuned) (W)')
+LightIV_data.add_to_dict('Recalc_basic_parameters', power_label = 'Power (W)', 
+                         alternate_power_label = 'Power (LTT tuned) (W)')
+LightIV_temp_data.add_to_dict('initial', power_label = 'Power (W)', 
+                         alternate_power_label = 'Power (LTT tuned) (W)')
+LightIV_temp_data2.add_to_dict('Recalc_basic_parameters', power_label = 'Power (W)', 
+                         alternate_power_label = 'Power (LTT tuned) (W)')
+LightIV_temp_data2.add_to_dict('initial', power_label = 'Power (W)', 
+                         alternate_power_label = 'Power (LTT tuned) (W)')
                          
 # Some other optional things you can calculate but may not need to.
 LightIV_data.add_to_dict('fit_Voc_slope', Atot = 0.054)
@@ -142,7 +268,35 @@ Atot2 = 1 # (cm^2)
 
 lightDic = LightIV_data.dictionary
 
+lightDicTemp = LightIV_temp_data.dictionary
+
+lightDicTemp23 = LightIV_temp_data2.dictionary
+
+Fixed_Current_27 = FixedCurrent_data_27.dictionary
+
+Fixed_Current_23 = FixedCurrent_data_23.dictionary
+
+Fixed_Current_25 = FixedCurrent_data_25.dictionary
+
 plt.close('all')
+#%%SELECTIVE PLOTTING VARIABLES#######################
+plot_all = True;
+show_all_samples = True;
+plot_iv = False;
+plot_sr = False;
+plot_resistivity = False;
+plot_voc_jsc = False;
+plot_efficiency = True;
+plot_ff = False;
+plot_voc_vs_time = False;
+if plot_all:
+    plot_iv = True;
+    plot_sr = True;
+    plot_resistivity = True;
+    plot_voc_jsc = True;
+    plot_efficiency = True;
+    plot_ff = True;
+    plot_voc_vs_time = True;
 
 #%% PLOT GLOBAL SETTINGS ########################################################
 color = sns.color_palette('Set1')
@@ -150,9 +304,13 @@ colors = (cycler(color=sns.color_palette('Set1')))
 color_grad = sns.color_palette('rocket',  n_colors = 130)
 color_grad2 = sns.color_palette('Blues_r', n_colors = 130)
 # colors = (cycler(color=sns.color_palette('rocket',  n_colors = 48)))
-#
-sample = ['C5245-X7Y0','C5245-X3Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4', 'C5195-X25Y5', 'C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6'
-sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4', 'C5195-X25Y5', 'C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+if show_all_samples:
+    sample = ['C5245-X7Y0','C5245-X3Y1','C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'] # 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15']#'C5245-X3Y1','C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15' # 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'
+    sample_labels = ['C5245-X7Y0-25$\degree$C','C5245-X3Y1','C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'] # 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+else:
+    sample = ['C5245-X7Y0']#'C5245-X3Y1','C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15' # 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5','C5247-X5Y5','C5247-X5Y4','C5195-X25Y5','C5195-X19Y15'
+    sample_labels = ['C5245-X7Y0-25$\degree$C'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+    
 dates = [None, None, None, None, None, None, None, None, None, None, None]
 colour_C5195 = color[0]
 colour_C5245 = color[1]
@@ -170,256 +328,324 @@ sns.set_theme(context='poster', style="ticks",
                   'xtick.direction': 'in', 'ytick.direction': 'in',
                   'xtick.top': True, 'ytick.right': True,
                   'lines.markersize': markersize})
+
 #%% PLOT ALL Eff vs Irr #######################################################
 # Example of how you might plot efficiency vs. laser irradiance
-
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
-# ax1.set_prop_cycle(colors)
-# ax1.axhline(0, c = 'k')
-# ax1.axvline(0, c = 'k')
-
-for i in range(len(sample)):
-    # This grab_data function goes into the data and grabs certain parameters 
-    # you specifiy. In this case the power and efficiency.
-    # Select the dictionary you want to pull from, the  focus lens position, 
-    # the filter(s) you want, and the laser current(s) you want to pull
-    x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
-                          'Power (W)', 'Eff',
-                          # pull out data only from a specific date (optional)
-                          date =  dates[i],
-                          # pull out data only with a specific wavelength (1550nm or 1310nm)
-                          LaserWL = '1550nm',
-                          # pull out data only with a specific voltage sweep direction
-                          direction = 'Forward',
-                          # x and y factor scales (in this case turn power into irradiance)
-                          xfactor=1/Atot, yfactor=1, 
-                          # the below won't do anything here
-                          m='^', col=color[3],
-                          lab='nolabel', l='')
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw= linewidth,
-             label = sample_labels[i])
-
-ax1.set_xscale('log')
-ax1.grid(which='both')
-ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
-ax1.set_ylabel('Efficiency (%)')
-ax1.set_title("Efficiency of various 2J PPCs")
-fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
-plt.show()
-
+if plot_efficiency:
+    fig1, ax1 = plt.subplots(1, 1)
+    fig1.set_size_inches(11, 9)
+    # ax1.set_prop_cycle(colors)
+    # ax1.axhline(0, c = 'k')
+    # ax1.axvline(0, c = 'k')
+    
+    for i in range(len(sample)):
+        # This grab_data function goes into the data and grabs certain parameters 
+        # you specifiy. In this case the power and efficiency.
+        # Select the dictionary you want to pull from, the  focus lens position, 
+        # the filter(s) you want, and the laser current(s) you want to pull
+        x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
+                              'Power (W)', 'Eff',
+                              # pull out data only from a specific date (optional)
+                              date =  dates[i],
+                              # pull out data only with a specific wavelength (1550nm or 1310nm)
+                              LaserWL = '1550nm',
+                              # pull out data only with a specific voltage sweep direction
+                              direction = 'Forward',
+                              # x and y factor scales (in this case turn power into irradiance)
+                              xfactor=1/Atot, yfactor=1, 
+                              # the below won't do anything here
+                              m='^', col=color[3],
+                              lab='nolabel', l='')
+        ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw= linewidth,
+                 label = sample_labels[i])
+    x1,y1 = plt_PPC.grab_data(LightIV_temp_data.dictionary, 'C5245-X7Y0',['18mm'],['all'],['all'], 
+                              'Power (W)', 'Eff',
+                              xfactor=1/Atot, yfactor = 1,
+                              m = '^', col = color[3], 
+                              lab = 'nolabel', l = '')
+    ax1.plot(x1,y1,c = 'red', marker = '+', ls = 'solid',markersize = 5, lw= linewidth,label = 'C5245-X7Y0-27$\degree$C')
+    x2,y2 = plt_PPC.grab_data(LightIV_temp_data2.dictionary, 'C5245-X7Y0',['18mm'],['all'],['all'], 
+                              'Power (W)', 'Eff',
+                              xfactor=1/Atot, yfactor = 1,
+                              m = '^', col = color[3], 
+                              lab = 'nolabel', l = '')
+    ax1.plot(x2,y2,c = 'blue', marker = '+',markersize = 5, ls = 'solid', lw= linewidth, label = 'C5245-X7Y0-23$\degree$C')
+    ax1.set_xscale('log')
+    ax1.grid(which='both')
+    ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
+    ax1.set_ylabel('Efficiency (%)')
+    ax1.set_title("Efficiency of various 2J PPCs")
+    fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+    plt.show()
 #%% PLOT SELECT IV CURVES #######################################################
 # # Example of how you might plot IV curves
-
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
-# ax1.set_prop_cycle(colors)
-ax1.axhline(0, c = 'k')
-ax1.axvline(0, c = 'k')
-
-#sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
-#sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
-#dates = [None, None, None, None, None, None, None, None, None]
-#colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
-#markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
-
-# duplicated currents have (#)'s beside them. Sometimes it is useful/clearer to
-# only select ones.
-curr = ['18.0', '18.0', '18.0','18.0','18.0','18.0', '18.0', '18.0', '18.0','18.0','18.0'] #What is this for? How to select filter?
-
-for i in range(len(sample)):
-    x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['ND1'], [curr[i]],
-                          'Voltage (V)','Current (A)', 
-                          date =  None,
-                          LaserWL = '1550nm',
-                          direction = 'Forward',
-                          xfactor=1, yfactor=-1/Atot, 
-                          m='^', col=color[3],
-                          lab='nolabel', l='')
-    ax1.plot(x[0], y[0], c = colours[i], marker = None, ls = linestyles[i], lw = linewidth,
-              label = sample_labels[i])
-
-# ax1.set_xscale('log')
-# ax1.set_yscale('log')
-ax1.grid(which='both')
-#ax1.set_ylim(-2.0, 6.0)
-#ax1.set_xlim(-0.1, 1.2)
-ax1.set_title('18 A ND1 2J PPCs', loc='right')
-ax1.set_xlabel('Voltage (V)')
-ax1.set_ylabel('Current Density (A/cm$^{2}$)')
-fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
-plt.show()
+if plot_iv==True:
+    fig1, ax1 = plt.subplots(1, 1)
+    fig1.set_size_inches(11, 9)
+    # ax1.set_prop_cycle(colors)
+    ax1.axhline(0, c = 'k')
+    ax1.axvline(0, c = 'k')
+    
+    #sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
+    #sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+    #dates = [None, None, None, None, None, None, None, None, None]
+    #colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
+    #markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
+    #sample_labels_temp = ["C5245-X7Y0 ND1 10A", "C5245-X7Y0 ND1 12A","C5245-X7Y0 ND1 14A"]
+    # duplicated currents have (#)'s beside them. Sometimes it is useful/clearer to
+    # only select ones.
+    curr = ['12.0']
+    for i in range(len(sample)):
+        x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['ND1'], curr,
+                              'Voltage (V)','Current (A)', 
+                              date =  None,
+                              LaserWL = '1550nm',
+                              direction = 'Forward',
+                              xfactor=1, yfactor=-1/Atot, 
+                              m='^', col=color[3],
+                              lab='nolabel', l='')
+        ax1.plot(x[0], y[0], c = colours[i], marker = None, ls = linestyles[i], lw = linewidth,
+                  label = sample_labels[i])
+    x1,y1 = plt_PPC.grab_data(LightIV_temp_data.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['12.0'], 
+                              'Voltage (V)','Current (A)',
+                              xfactor=1, yfactor = -1/Atot,
+                              m = '^', col = color[3], 
+                              lab = 'nolabel', l = '')
+    ax1.plot(x1[0],y1[0 ],c = 'red', ls = 'solid', lw= linewidth,label='C5245-X7Y0-27$\degree$C')# + curr[0] + " " + "ND1")
+    x2,y2 = plt_PPC.grab_data(LightIV_temp_data2.dictionary, 'C5245-X7Y0',['18mm'],['ND1'],['12.0'], 
+                              'Voltage (V)','Current (A)',
+                              xfactor=1, yfactor = -1/Atot,
+                              m = '^', col = color[3], 
+                              lab = 'nolabel', l = '')
+    ax1.plot(x2[0],y2[0],c = 'blue', ls = 'solid', lw= linewidth,label = 'C5245-X7Y0-23$\degree$C')
+    # ax1.set_xscale('log')
+    # ax1.set_yscale('log')
+    ax1.grid(which='both')
+    ax1.set_ylim(-0.25,2.8)
+    ax1.set_xlim(-0.1, 1.2)
+    ax1.set_title('2J PPCs JV curves (12A ND1) with TEC temperature comparison')
+    ax1.set_xlabel('Voltage (V)')
+    ax1.set_ylabel('Current Density (A/cm$^{2}$)')
+    #fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+    fig1.legend().set_draggable(True)
+    plt.show()
+#%% PLOT VOC OVER TIME
+if plot_voc_vs_time==True:
+    fig1, ax1 = plt.subplots(1, 1)
+    fig1.set_size_inches(11, 9)
+    # ax1.set_prop_cycle(colors)
+    ax1.axhline(0, c = 'k')
+    ax1.axvline(0, c = 'k')
+    
+    #sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
+    #sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+    #dates = [None, None, None, None, None, None, None, None, None]
+    #colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
+    #markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
+    
+    # duplicated currents have (#)'s beside them. Sometimes it is useful/clearer to
+    # only select ones.
+    x1,y1 = plt_PPC.grab_data(FixedCurrent_data_27.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['     12.0'], 
+                              'Time (s)','Voltage (V)',
+                              xfactor=1, yfactor = 1,
+                              m = '^', col = color[3], 
+                              lab = 'nolabel', l = '')
+    ax1.plot(x1[0],y1[0],c = colours[2], marker = markers[2], ls = linestyles[7], lw= linewidth,label='C5245-X7Y0-27$\degree$C')# + curr[0] + " " + "ND1")
+    x2,y2 = plt_PPC.grab_data(FixedCurrent_data_23.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['     12.0'], #Need five spaces before current value here, for some reason.
+                              'Time (s)','Voltage (V)',
+                              xfactor=1, yfactor = 1,
+                              m = '^', col = color[3],
+                              lab = 'nolabel', l = '')
+    ax1.plot(x2[0],y2[0],c = colours[4], marker = markers[4], ls = linestyles[1], lw= linewidth,label = 'C5245-X7Y0-23$\degree$C')
+    x3,y3 = plt_PPC.grab_data(FixedCurrent_data_25.dictionary, 'C5245-X7Y0',['NaN'],['ND1'],['     12.0'], #Need five spaces before current value here, for some reason.
+                              'Time (s)','Voltage (V)',
+                              xfactor=1, yfactor = 1,
+                              m = '^', col = color[3],
+                              lab = 'nolabel', l = '')
+    ax1.plot(x3[0],y3[0],c = colours[7], marker = markers[7], ls = linestyles[1], lw= linewidth,label = 'C5245-X7Y0-25$\degree$C')
+    # ax1.set_xscale('log')
+    # ax1.set_yscale('log')
+    ax1.grid(which='both')
+    #ax1.set_ylim(-0.25,0.75)
+    #ax1.set_xlim(-0.1, 1.2)
+    ax1.set_title('$V_{oc}$ over time for 2J PPCs (12 A ND1)')
+    ax1.set_xlabel('Time (s)')
+    ax1.set_ylabel('$V_{oc}$ (V)')
+    #fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+    fig1.legend().set_draggable(True)
+    plt.ginput(10)
+    plt.show()
 #%% PLOT FILL FACOTR VS IRRANDIANCE #######################################################
-
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
-# ax1.set_prop_cycle(colors)
-# ax1.axhline(0, c = 'k')
-# ax1.axvline(0, c = 'k')
-
-#sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
-#sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
-#dates = [None, None, None, None, None, None, None, None, None]
-#colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
-#markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
-
-for i in range(len(sample)):
-    # This grab_data function goes into the data and grabs certain parameters 
-    # you specifiy. In this case the power and efficiency.
-    # Select the dictionary you want to pull from, the  focus lens position, 
-    # the filter(s) you want, and the laser current(s) you want to pull
-    x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
-                          'Power (W)', 'FF',
-                          # pull out data only from a specific date (optional)
-                          date =  dates[i],
-                          # pull out data only with a specific wavelength (1550nm or 1310nm)
-                          LaserWL = '1550nm',
-                          # pull out data only with a specific voltage sweep direction
-                          direction = 'Forward',
-                          # x and y factor scales (in this case turn power into irradiance)
-                          xfactor=1/Atot, yfactor=1, 
-                          # the below won't do anything here
-                          m='^', col=color[3],
-                          lab='nolabel', l='')
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i],lw = linewidth,
-             label = sample_labels[i])
-
-ax1.set_xscale('log')
-ax1.grid(which='both')
-ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
-ax1.set_ylabel('Fill factor')
-ax1.set_title("Fill factor as function of input power")
-fig1.legend(framealpha=1, loc = "upper left", fontsize = legend_fontsize).set_draggable(True)
-plt.show()
+if plot_ff:
+    fig1, ax1 = plt.subplots(1, 1)
+    fig1.set_size_inches(11, 9)
+    # ax1.set_prop_cycle(colors)
+    # ax1.axhline(0, c = 'k')
+    # ax1.axvline(0, c = 'k')
+    
+    #sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
+    #sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+    #dates = [None, None, None, None, None, None, None, None, None]
+    #colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
+    #markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
+    
+    for i in range(len(sample)):
+        # This grab_data function goes into the data and grabs certain parameters 
+        # you specifiy. In this case the power and efficiency.
+        # Select the dictionary you want to pull from, the  focus lens position, 
+        # the filter(s) you want, and the laser current(s) you want to pull
+        x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
+                              'Power (W)', 'FF',
+                              # pull out data only from a specific date (optional)
+                              date =  dates[i],
+                              # pull out data only with a specific wavelength (1550nm or 1310nm)
+                              LaserWL = '1550nm',
+                              # pull out data only with a specific voltage sweep direction
+                              direction = 'Forward',
+                              # x and y factor scales (in this case turn power into irradiance)
+                              xfactor=1/Atot, yfactor=1, 
+                              # the below won't do anything here
+                              m='^', col=color[3],
+                              lab='nolabel', l='')
+        ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i],lw = linewidth,
+                 label = sample_labels[i])
+    
+    ax1.set_xscale('log')
+    ax1.grid(which='both')
+    ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
+    ax1.set_ylabel('Fill factor')
+    ax1.set_title("Fill factor of 2J PPCs")
+    fig1.legend(framealpha=1, loc = "upper left", fontsize = legend_fontsize).set_draggable(True)
+    plt.show()
 #%% PLOT SPECTRAL RESPONSE VS IRRADIANCE####################################################
-
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
-# ax1.set_prop_cycle(colors)
-# ax1.axhline(0, c = 'k')
-# ax1.axvline(0, c = 'k')
-
-#sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
-#sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
-#dates = [None, None, None, None, None, None, None, None, None]
-#colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
-#markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
-
-for i in range(len(sample)):
-    # This grab_data function goes into the data and grabs certain parameters 
-    # you specifiy. In this case the power and efficiency.
-    # Select the dictionary you want to pull from, the  focus lens position, 
-    # the filter(s) you want, and the laser current(s) you want to pull
-    x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
-                          'Power (W)', 'SR (A/W)',
-                          # pull out data only from a specific date (optional)
-                          date =  dates[i],
-                          # pull out data only with a specific wavelength (1550nm or 1310nm)
-                          LaserWL = '1550nm',
-                          # pull out data only with a specific voltage sweep direction
-                          direction = 'Forward',
-                          # x and y factor scales (in this case turn power into irradiance)
-                          xfactor=1/Atot, yfactor=1, 
-                          # the below won't do anything here
-                          m='^', col=color[3],
-                          lab='nolabel', l='')
-    y = abs(np.array(y))
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw = linewidth,
-             label = sample_labels[i])
-
-ax1.set_xscale('log')
-ax1.grid(which='both')
-ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
-ax1.set_ylabel('SR (A/W)')
-ax1.set_title("Spectral response as function of input power")
-fig1.legend(framealpha=1, loc = "upper left", fontsize = legend_fontsize).set_draggable(True)
-plt.show()
-#%% PLOT ISC-VOC##############################################################
-
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
-# ax1.set_prop_cycle(colors)
-# ax1.axhline(0, c = 'k')
-# ax1.axvline(0, c = 'k')
-
-#sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
-#sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
-#dates = [None, None, None, None, None, None, None, None, None]
-#colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
-#markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
-
-for i in range(len(sample)):
-    # This grab_data function goes into the data and grabs certain parameters 
-    # you specifiy. In this case the power and efficiency.
-    # Select the dictionary you want to pull from, the  focus lens position, 
-    # the filter(s) you want, and the laser current(s) you want to pull
-    x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
-                          'Isc (A)', 'Voc (V)',
-                          # pull out data only from a specific date (optional)
-                          date =  dates[i],
-                          # pull out data only with a specific wavelength (1550nm or 1310nm)
-                          LaserWL = '1550nm',
-                          # pull out data only with a specific voltage sweep direction
-                          direction = 'Forward',
-                          # x and y factor scales (in this case turn power into irradiance)
-                          xfactor=1/Atot, yfactor=1, 
-                          # the below won't do anything here
-                          m='^', col=color[3],
-                          lab='nolabel', l='')
-    x = abs(np.array(x)) #Make sure that this is ok to do
-    x = x/Atot
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw = linewidth,
-             label = sample_labels[i])
-
-ax1.set_yscale('linear')
-ax1.set_xscale('log')
-ax1.grid(which='both')
-ax1.set_ylabel('Voc (V)')
-ax1.set_xlabel('Jsc (A/cm$^2$)')
-ax1.set_title("Voc-Jsc curve")
-fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
-plt.show()
+if plot_sr:
+    fig1, ax1 = plt.subplots(1, 1)
+    fig1.set_size_inches(11, 9)
+    # ax1.set_prop_cycle(colors)
+    # ax1.axhline(0, c = 'k')
+    # ax1.axvline(0, c = 'k')
+    
+    #sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
+    #sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+    #dates = [None, None, None, None, None, None, None, None, None]
+    #colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
+    #markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
+    
+    for i in range(len(sample)):
+        # This grab_data function goes into the data and grabs certain parameters 
+        # you specifiy. In this case the power and efficiency.
+        # Select the dictionary you want to pull from, the  focus lens position, 
+        # the filter(s) you want, and the laser current(s) you want to pull
+        x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
+                              'Power (W)', 'SR (A/W)',
+                              # pull out data only from a specific date (optional)
+                              date =  dates[i],
+                              # pull out data only with a specific wavelength (1550nm or 1310nm)
+                              LaserWL = '1550nm',
+                              # pull out data only with a specific voltage sweep direction
+                              direction = 'Forward',
+                              # x and y factor scales (in this case turn power into irradiance)
+                              xfactor=1/Atot, yfactor=1, 
+                              # the below won't do anything here
+                              m='^', col=color[3],
+                              lab='nolabel', l='')
+        y = abs(np.array(y))
+        ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw = linewidth,
+                 label = sample_labels[i])
+    
+    ax1.set_xscale('log')
+    ax1.grid(which='both')
+    ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
+    ax1.set_ylabel('SR (A/W)')
+    ax1.set_title("Spectral response of 2J PPCs")
+    fig1.legend(framealpha=1, loc = "upper left", fontsize = legend_fontsize).set_draggable(True)
+    plt.show()
+#%% PLOT JSC-VOC##############################################################
+if plot_voc_jsc:
+    fig1, ax1 = plt.subplots(1, 1)
+    fig1.set_size_inches(11, 9)
+    # ax1.set_prop_cycle(colors)
+    # ax1.axhline(0, c = 'k')
+    # ax1.axvline(0, c = 'k')
+    
+    #sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
+    #sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+    #dates = [None, None, None, None, None, None, None, None, None]
+    #colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
+    #markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
+    
+    for i in range(len(sample)):
+        # This grab_data function goes into the data and grabs certain parameters 
+        # you specifiy. In this case the power and efficiency.
+        # Select the dictionary you want to pull from, the  focus lens position, 
+        # the filter(s) you want, and the laser current(s) you want to pull
+        x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
+                              'Isc (A)', 'Voc (V)',
+                              # pull out data only from a specific date (optional)
+                              date =  dates[i],
+                              # pull out data only with a specific wavelength (1550nm or 1310nm)
+                              LaserWL = '1550nm',
+                              # pull out data only with a specific voltage sweep direction
+                              direction = 'Forward',
+                              # x and y factor scales (in this case turn power into irradiance)
+                              xfactor=1/Atot, yfactor=1, 
+                              # the below won't do anything here
+                              m='^', col=color[3],
+                              lab='nolabel', l='')
+        x = abs(np.array(x)) #Make sure that this is ok to do
+        x = x/Atot
+        ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw = linewidth,
+                 label = sample_labels[i])
+    
+    ax1.set_yscale('linear')
+    ax1.set_xscale('log')
+    ax1.grid(which='both')
+    ax1.set_ylabel('Voc (V)')
+    ax1.set_xlabel('Jsc (A/cm$^2$)')
+    ax1.set_title("2J PPCs $V_{oc}-J_{sc}$")
+    fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+    plt.show()
 #%% PLOT RESISTIVITY VS IRRADIANCE#################################
-
-fig1, ax1 = plt.subplots(1, 1)
-fig1.set_size_inches(11, 9)
-# ax1.set_prop_cycle(colors)
-# ax1.axhline(0, c = 'k')
-# ax1.axvline(0, c = 'k')
-
-#sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
-#sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
-#dates = [None, None, None, None, None, None, None, None, None]
-#colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
-#markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
-
-for i in range(len(sample)):
-    # This grab_data function goes into the data and grabs certain parameters 
-    # you specifiy. In this case the power and efficiency.
-    # Select the dictionary you want to pull from, the  focus lens position, 
-    # the filter(s) you want, and the laser current(s) you want to pull
-    x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
-                          'Power (W)', 'Inverse_slope_at_Voc(1/m)',
-                          # pull out data only from a specific date (optional)
-                          date =  dates[i],
-                          # pull out data only with a specific wavelength (1550nm or 1310nm)
-                          LaserWL = '1550nm',
-                          # pull out data only with a specific voltage sweep direction
-                          direction = 'Forward',
-                          # x and y factor scales (in this case turn power into irradiance)
-                          xfactor=1/Atot, yfactor=1, 
-                          # the below won't do anything here
-                          m='^', col=color[3],
-                          lab='nolabel', l='')
-    y = abs(np.array(y)) #Make sure that this is ok to do. Perhaps the resistance should be positive, since these curves are typically flipped.
-    ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw = linewidth,
-             label = sample_labels[i])
-
-ax1.set_xscale('log')
-ax1.set_yscale('log')
-ax1.grid(which='both')
-ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
-ax1.set_ylabel('Resistivity ($\Omega$*m)')
-ax1.set_title("Series resistance at Voc vs irradiance")
-fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
-plt.show()
+if plot_resistivity:
+    fig1, ax1 = plt.subplots(1, 1)
+    fig1.set_size_inches(11, 9)
+    # ax1.set_prop_cycle(colors)
+    # ax1.axhline(0, c = 'k')
+    # ax1.axvline(0, c = 'k')
+    
+    #sample = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6'
+    #sample_labels = ['C5245-X7Y0','C5245-X3Y1', 'C5245-X6Y1', 'C5246-X12Y1','C5246-X8Y1', 'C5247-X7Y6', 'C5247-X7Y5', 'C5247-X5Y5', 'C5247-X5Y4'] # 'C5246-X12Y1', 'C5247-X7Y6' #For plotting
+    #dates = [None, None, None, None, None, None, None, None, None]
+    #colours = [color[0], color[1], color[2], color[3], color[4], color[5], color[6], color[7], color[8]]
+    #markers = ['o', 's', '*', '^', 'P', 'o', 's', '*', '^']
+    
+    for i in range(len(sample)):
+        # This grab_data function goes into the data and grabs certain parameters 
+        # you specifiy. In this case the power and efficiency.
+        # Select the dictionary you want to pull from, the  focus lens position, 
+        # the filter(s) you want, and the laser current(s) you wSant to pull
+        x, y = plt_PPC.grab_data(LightIV_data.dictionary, sample[i], ['18mm'], ['all'], ['all'],
+                              'Power (W)', 'Inverse_slope_at_Voc(1/m)',
+                              # pull out data only from a specific date (optional)
+                              date =  dates[i],
+                              # pull out data only with a specific wavelength (1550nm or 1310nm)
+                              LaserWL = '1550nm',
+                              # pull out data only with a specific voltage sweep direction
+                              direction = 'Forward',
+                              # x and y factor scales (in this case turn power into irradiance)
+                              xfactor=1/Atot, yfactor=1, 
+                              # the below won't do anything here
+                              m='^', col=color[3],
+                              lab='nolabel', l='')
+        y = abs(np.array(y)) #Make sure that this is ok to do. Perhaps the resistance should be positive, since these curves are typically flipped.
+        ax1.plot(x, y, c = colours[i], marker = markers[i], ls = linestyles[i], lw = linewidth,
+                 label = sample_labels[i])
+    
+    ax1.set_xscale('log')
+    ax1.set_yscale('log')
+    ax1.grid(which='both')
+    ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
+    ax1.set_ylabel('Resistivity ($\Omega$*cm)')
+    ax1.set_title("Series resistance of 2J PPCs at $V_{oc}$")
+    fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
+    plt.show()
