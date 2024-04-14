@@ -23,7 +23,7 @@ import sys
 
 # Add the paths to where you keep the measurements (.sciv files) and to where you
 # are keeping the PPC_data_collector.py and plot_PPC_IV_functions.py files.
-sys.path.append('C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data\\') #!!!
+sys.path.append('C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\DataCleanCopy\\') #!!!
 sys.path.append('C:\\Users\\louis\\Sunlab\\2JPPC_Analysis\Getting_started_files') #!!!
 from Sample_Names_and_Locations import *
 import PPC_data_collector as PPC
@@ -32,11 +32,11 @@ import plot_PPC_IV_functions as plt_PPC
 #%% DATA LOCATIONS ##############################################################
 
 # Path to where the data is located. Same as in the import section.
-directory = 'C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data\\' #!!!
+directory = 'C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\DataCleanCopy\\' #!!!
 
 # Laser power measurements
 # Path to where the 1520 nm laser power file is being kept.
-power_folder = 'C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\Data\\' #!!!
+power_folder = 'C:\\Users\\louis\\OneDrive - University of Ottawa\\uOttawa\\2023-24\\Hiver2024\\Sunab pt 2\\DataCleanCopy\\' #!!!
 power_file = '2023-10-02-Compiled_Power_Measurements_for_LTT_1520nm.xlsx'
 power_table = pd.read_excel(power_folder+power_file, 
                             sheet_name = 'Values_for_Current_Use',
@@ -249,9 +249,11 @@ FixedCurrent_data_25.get_powers_updated(power_table, filters = 'No Filter',
 # with calibrated vs. uncalibrated values.)  
 LightIV_data.add_to_dict('initial', power_label = 'Power (W)', 
                          alternate_power_label = 'Power (LTT tuned) (W)')
+LightIV_data.add_to_dict('Recalc_basic_parameters', power_label = 'Power (W)', 
+                         alternate_power_label = 'Power (LTT tuned) (W)')
 LightIV_temp_data.add_to_dict('initial', power_label = 'Power (W)', 
                          alternate_power_label = 'Power (LTT tuned) (W)')
-LightIV_temp_data2.add_to_dict('Add_basic', power_label = 'Power (W)', 
+LightIV_temp_data2.add_to_dict('Recalc_basic_parameters', power_label = 'Power (W)', 
                          alternate_power_label = 'Power (LTT tuned) (W)')
 LightIV_temp_data2.add_to_dict('initial', power_label = 'Power (W)', 
                          alternate_power_label = 'Power (LTT tuned) (W)')
@@ -421,7 +423,7 @@ if plot_iv==True:
     ax1.grid(which='both')
     ax1.set_ylim(-0.25,2.8)
     ax1.set_xlim(-0.1, 1.2)
-    ax1.set_title('12 A ND1 temperature comparison')
+    ax1.set_title('2J PPCs JV curves (12A ND1) with TEC temperature comparison')
     ax1.set_xlabel('Voltage (V)')
     ax1.set_ylabel('Current Density (A/cm$^{2}$)')
     #fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
@@ -466,7 +468,7 @@ if plot_voc_vs_time==True:
     ax1.grid(which='both')
     #ax1.set_ylim(-0.25,0.75)
     #ax1.set_xlim(-0.1, 1.2)
-    ax1.set_title('$V_{oc}$ over time (12 A ND1)')
+    ax1.set_title('$V_{oc}$ over time for 2J PPCs (12 A ND1)')
     ax1.set_xlabel('Time (s)')
     ax1.set_ylabel('$V_{oc}$ (V)')
     #fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
@@ -512,7 +514,7 @@ if plot_ff:
     ax1.grid(which='both')
     ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
     ax1.set_ylabel('Fill factor')
-    ax1.set_title("Fill factor as function of input power")
+    ax1.set_title("Fill factor of 2J PPCs")
     fig1.legend(framealpha=1, loc = "upper left", fontsize = legend_fontsize).set_draggable(True)
     plt.show()
 #%% PLOT SPECTRAL RESPONSE VS IRRADIANCE####################################################
@@ -555,7 +557,7 @@ if plot_sr:
     ax1.grid(which='both')
     ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
     ax1.set_ylabel('SR (A/W)')
-    ax1.set_title("Spectral response as function of input power")
+    ax1.set_title("Spectral response of 2J PPCs")
     fig1.legend(framealpha=1, loc = "upper left", fontsize = legend_fontsize).set_draggable(True)
     plt.show()
 #%% PLOT JSC-VOC##############################################################
@@ -600,7 +602,7 @@ if plot_voc_jsc:
     ax1.grid(which='both')
     ax1.set_ylabel('Voc (V)')
     ax1.set_xlabel('Jsc (A/cm$^2$)')
-    ax1.set_title("Voc-Jsc curve")
+    ax1.set_title("2J PPCs $V_{oc}-J_{sc}$")
     fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
     plt.show()
 #%% PLOT RESISTIVITY VS IRRADIANCE#################################
@@ -643,7 +645,7 @@ if plot_resistivity:
     ax1.set_yscale('log')
     ax1.grid(which='both')
     ax1.set_xlabel('Irradiance (W/cm$^{2}$)')
-    ax1.set_ylabel('Resistivity ($\Omega$*m)')
-    ax1.set_title("Series resistance at Voc vs irradiance")
+    ax1.set_ylabel('Resistivity ($\Omega$*cm)')
+    ax1.set_title("Series resistance of 2J PPCs at $V_{oc}$")
     fig1.legend(framealpha=1, loc = "upper left").set_draggable(True)
     plt.show()

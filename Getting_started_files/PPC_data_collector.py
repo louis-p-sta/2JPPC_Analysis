@@ -776,7 +776,7 @@ class PPC_data_collector:
                                     pass
                                     print('KeyError in Vmp Uncertainty of add_to_dict:', err)
                                     print(name, pos, filt, curr)
-                            elif items == "Add_basic":
+                            elif items == "Recalc_basic_parameters":
                                 try:
                                     # Define I and V as numpy arrays
                                     I = np.array(self.dictionary[name][pos][filt][curr]['Current (A)'])
